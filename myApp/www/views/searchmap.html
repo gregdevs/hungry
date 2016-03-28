@@ -1,0 +1,28 @@
+
+
+<ion-view  view-title="<i class='ion-fork'></i><span class='apptitle'>{{appTitle}}</span> <i class='ion-knife'></i>">
+  <ion-content>
+	<div id="search-map"></div>
+
+      <div id="singlePlace" class="mainsection">
+        <i class="ion-close-round" id="closeBtn"></i>
+        <div id="placeInfo">
+          <ul>
+            <li class="placelist" data-lat="{{latofplace}}" data-long="{{lngofplace}}">
+              <span class="placeInfo" ng-click="searchPlace($event);">{{nameofplace}}</span>
+              <span class="placeInfo">{{streetofplace}}</span>
+              <span class="placeInfo city">{{cityofplace}}</span>
+              <span class="placeInfo">{{stateofplace}}</span>
+              <span class="placeInfo">{{zipofplace}}</span>
+              <span class="placeInfo">{{phoneofplace}}</span>
+              <img src="http://s3-media4.fl.yelpcdn.com/assets/2/www/img/c2f3dd9799a5/ico/stars/v1/stars_4.png">
+            </li>
+          </ul>
+
+
+        </div>
+      </div>
+
+
+</ion-content>
+</ion-view>

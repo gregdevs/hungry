@@ -1,0 +1,100 @@
+
+
+<ion-view  view-title="<i class='ion-fork'></i><span class='apptitle'>{{appTitle}}</span> <i class='ion-knife'></i>">
+  <ion-content>
+		
+		<div ng-repeat="user in users">
+			
+			<div id="idHolderUser" class="userpill-large" data-userid="{{user.id}}" data-username="{{user.username}}"><img ng-src="{{userImage}}"/></div>
+			<div class="userlocation">
+				<span>{{user.city}}, {{user.state}}</span>	
+				<span class="conn">{{reputation}}</span>
+			   <!-- <a href="#/tab/userfollowing/{{user.username}}"> <span>Following</span></a>-->
+			    <a  href="#/tab/userfollowers/{{user.username}}"><span class="followerspan">Followers</span></a>
+			     	  		    
+			</div>	
+
+
+			<div class="row engageuser">
+
+			     <div class="col col-33 foodbuckets addfriendbucket" ng-if="showicon == 'true' && editprofile == 'true' ">
+			     	 <i class="ion-person-add" ng-click="addFriend()"></i>
+			     	 <span class="subtitle">Follow</span>
+			     </div>
+
+
+			     <div class="col col-33 foodbuckets addfriendbucket myforks"  ng-click="showMentions($event)">
+			     	<i class="ion-fork" ></i>
+			     	 <span class="subtitle">Forks</span>
+			     </div>	
+
+		     
+
+			     <div class="col col-33 foodbuckets myfavs" ng-click="showFavorites($event)">
+			     	 <i class="ion-ios-heart"></i>
+			     	 <span class="subtitle">Favorite Eats</span>
+			     </div>
+
+
+
+			     <div class="col col-33 foodbuckets mylikes" ng-click="showLikes($event)">
+			     	  <i class="ion-ios-heart" ></i>
+			     	  <span class="subtitle">Likes</span>
+			     </div>
+
+
+			</div>
+
+
+			<span class="activitysmall">activity</span>
+			<div class="powerbar">
+				<div class="powercover" style="width: {{counts}}%"></div>
+			</div>
+
+
+		</div>
+<!-- show Mention -->
+<div ng-if="showmentions == 'true'">
+	<h4>forks&nbsp;&nbsp;<span style="font-weight:400;">{{forklength}}</span></h4>
+	 <ion-list>
+	  <ion-item item="item" ng-repeat="mention in mentions" class="mentionWrapper  item-divider">
+	  	 <h3 class="mention" ng-bind-html="::mention | getPlace">&nbsp;<span>@</span>{{mention | getPlace}}</h3>
+	  	<span class="fromtime">&nbsp;{{mention.created_date | fromTime}} ago</span>
+       <span class="minititle" ng-bind-html="mention.placemention | getHash">{{mention.placemention | getHash}}&nbsp</span>
+	  	<div class="userpill"><img ng-src="{{userImage}}"/></div> <span  ng-bind-html="mention.username | getUser" class="byline">{{mention.username | getUser}}</span>
+	  </ion-item>
+	</ion-list>
+</div>
+<!-- show Favorite eats-->
+<div ng-if="showfavorites == 'true'">
+	<h4>Favorite eats&nbsp;&nbsp;<span style="font-weight:400;">{{favoriteslength}}</span></h4>
+	 <ion-list>
+	  <ion-item item="item" ng-repeat="favorite in favorites" class="mentionWrapper  item-divider">
+	  	 <h3 class="mention" ng-bind-html="::favorite | getPlace">&nbsp;<span>@</span>{{favorite | getPlace}}</h3>
+	  </ion-item>
+	</ion-list>
+</div>
+
+<!-- show Likes -->
+<div ng-if="showlikes == 'true'">
+	<h4>Likes&nbsp;&nbsp;<span style="font-weight:400;">{{likeslength}}</span></h4>
+
+   <ion-list>
+    <ion-item item="item" ng-repeat="mention in likes"  ng-if="mention.value == '100'"class="mentionWrapper item-divider" >
+	  	 <h3 class="mention" ng-bind-html="::mention | getPlace">&nbsp;<span>@</span>{{mention | getPlace}}</h3><span class="fromtime">&nbsp;{{mention.mention.created_date | fromTime}} ago</span>
+
+       <span class="minititle" ng-bind-html="mention.mention.placemention | getHash">{{mention.mention.placemention | getHash}}&nbsp</span>
+
+      <div class="userpill"><img ng-src="{{mention.mentions.userImage}}"/></div>      
+       <span  ng-bind-html="mention.mention.username | getUser" class="byline">{{mention.username}}</span>
+
+
+    </ion-item>
+  </ion-list>
+
+
+</div>
+
+
+</ion-content>
+</ion-view>

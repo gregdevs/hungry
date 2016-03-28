@@ -1,0 +1,58 @@
+
+<ion-view view-title="<i class='ion-fork'></i><span class='apptitle'>{{appTitle}}</span> <i class='ion-knife'></i>">
+  <ion-content>
+     <div class="location-wrapper">
+       <span class="ion-close-round" ng-click="closeLocationPane()"></span>
+       <div id="location-map"></div>
+     </div>
+      <div id="idHolderUser" class="userpill-large" object-id="{{user.id}}" data-username="{{user.username}}"><img ng-src="{{user.userImage}}"/></div>
+      <div class="userlocation">
+        <!--<span>{{user.city}}, {{user.state}}</span>  -->
+        <span>{{mentionCount}} forks</span>
+        <span style="clear:both;display:block;">{{cityofplace}}</span>
+         <!-- <a href="#/tab/userfollowing/{{user.username}}"> <span>Following</span></a>-->
+          <a  href="#/tab/userfollowers/{{user.username}}"><span class="followerspan">{{favoriteCount}} Followers</span></a>
+                      
+      </div>  
+      <div class="row engageuser">
+           <div class="col col-33 foodbuckets addfriendbucket" ng-click="openModal()">
+             <i class="ion-fork" ></i>
+             <span class="subtitle">Fork</span>
+           </div>
+           <div class="col col-33 foodbuckets adfav" ng-click="addToFavorites($event)">
+             <i class="ion-ios-heart"></i>
+             <span ng-if="addedsuccess == 'false'" class="subtitle">Favorite This</span>
+             <span ng-if="addedsuccess == 'true'" class="added">Added To Favorites!</span>
+           </div>
+           <div class="col col-33 foodbuckets" ng-click="showLocation($event)">
+             <i class="ion-ios-location"></i>
+              <span class="subtitle">Location</span>
+           </div>
+      </div>
+
+
+<div ng-if="nomentions == 'none'"><h4 style="text-align: center;">No Forks For this Restaurant yet! Be the first!</h4></div>
+
+   <ion-list>
+    <ion-item item="item" ng-repeat="mention in place" class="mentionWrapper item-divider" ng-if="nomentions == 'exist'">
+       <h3 class="mention" ng-bind-html="::mention | getPlace">&nbsp;<span>@</span>{{mention | getPlace}}</h3>
+      <span class="fromtime">&nbsp;{{mention.created_date | fromTime}} ago</span>
+       <span class="minititle" ng-bind-html="mention.placemention | getHash">{{mention.placemention | getHash}}&nbsp</span>
+      <div class="userpill"><img ng-src="{{mention.mentions.userImage}}"/></div>
+        <span ng-if="mention.mentions.username == localUser" class="byline">{{mention.username | getUser}}</span>
+        <span ng-if="mention.mentions.username != localUser" ng-bind-html="mention.username | getUser" class="byline">{{mention.username | getUser}}</span>
+	
+    <div class="interactionbox">
+      <i class="ion-thumbsup repbtn" like-fork usertolike="{{mention.username}}" data-reputationid="{{reputationid}}" data-mentionid="{{mention.id}}" data-placeid="{{mention.placeid}}"></i>
+      <i class="ion-thumbsdown repbtn" unlike-fork usertounlike="{{mention.username}}" data-reputationid="{{reputationid}}"  data-mentionid="{{mention.id}}" data-placeid="{{mention.placeid}}"></i>
+
+    </div>
+    
+    </ion-item>
+  </ion-list>
+
+
+
+
+</ion-content>
+</ion-view>

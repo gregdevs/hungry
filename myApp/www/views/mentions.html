@@ -1,0 +1,37 @@
+<ion-view  view-title="<i class='ion-fork'></i><span class='apptitle'>forks near {{appTitle}}</span> <i class='ion-knife'></i>">
+  <ion-content>
+  <ion-spinner></ion-spinner>
+  <ion-refresher pulling-icon="ion-fork" spinner="spiral"
+    on-refresh="doRefresh()">
+  </ion-refresher>    
+<div ng-if="nomentions == 'none'"><h4 style="text-align: center;">No Forks in this area yet! Be the first!</h4></div>
+ 
+   <ion-list>
+    <ion-item item="item" ng-repeat="mention in mentions" class="mentionWrapper item-divider" ng-if="nomentions == 'exist'">
+       <h3 class="mention" ng-bind-html="::mention | getPlace">&nbsp;<span>@</span>{{mention}}</h3>
+      <span class="fromtime">&nbsp;{{mention.created_date | fromTime}} ago</span>
+       <span class="minititle" ng-bind-html="mention.placemention | getHash">{{mention.placemention | getHash}}&nbsp</span>
+
+      <div class="userpill"><img ng-src="{{mention.mentions.userImage}}"/></div> 
+      
+      <a ng-if="mention.mentions.username == localUser" href="#/tab/profile"> 
+        <span class="byline">{{mention.username}}</span>
+      </a>
+      <a ng-if="mention.mentions.username != localUser" href="#/tab/mentionsuser/{{mention.username}}"> 
+        <span class="byline">{{mention.username}}</span>
+      </a>
+
+    <div class="interactionbox">
+      <i class="ion-thumbsup repbtn" like-fork usertolike="{{mention.username}}" data-placeid="{{mention.placeid}}" data-reputationid="{{reputationid}}" data-mentionid="{{mention.id}}"></i>
+      <i class="ion-thumbsdown repbtn" unlike-fork usertounlike="{{mention.username}}" data-placeid="{{mention.placeid}}" data-reputationid="{{reputationid}}"  data-mentionid="{{mention.id}}"></i>
+     <!-- <i class="ion-thumbsup likebtn" favorite-this data-mentionid="{{mention.id}}"></i>-->
+
+    </div>
+
+    </ion-item>
+  </ion-list>
+
+
+  
+</ion-content>
+</ion-view>

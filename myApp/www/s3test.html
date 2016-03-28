@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html ng-app="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE-edge">
+		<title></title>
+		<meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" >
+        <script src="https://sdk.amazonaws.com/js/aws-sdk-2.2.45.min.js"></script>
+<script type="text/javascript">
+    AWS.config.update({
+        accessKeyId : 'ACCESSID',
+        secretAccessKey : 'SECRETKEY'
+    });
+    AWS.config.region = 'us-east-1';
+</script>
+
+    </head>
+    <body>
+       
+
+
+
+<form id="fileUploadForm" method="post" enctype="multipart/form-data">
+<input type="file" name="file" id="file" value="dataFile" required="">
+<button type="submit">send</button>
+</form>
+
+
+<div id="imager">
+    <img />
+
+</div>
+
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.9/angular-resource.js"></script>
+
+
+<script type="text/javascript">
+localStorage.setItem("user", "chaya")
+localStorage.setItem("id", "2")
+var username = localStorage.getItem("user")
+var userid = localStorage.getItem("id")
+
+
+
+$("#fileUploadForm").submit(function() {
+var bucket = new AWS.S3({params: {Bucket: 'Bucket'}});
+var fileChooser = document.getElementById('file');
+var file = fileChooser.files[0];
+if (file) {
+var params = {Key: username + userid + 'profile', ContentType: file.type, Body: file};
+bucket.upload(params).on('httpUploadProgress', function(evt) {
+console.log("Uploaded :: " + parseInt((evt.loaded * 100) / evt.total)+'%');
+}).send(function(err, data) {
+console.log(err)
+});
+}
+return false;
+});
+
+new AWS.S3().listObjects({Bucket: 'Bucket'}, function(error, data) {
+  if (error) {
+    console.log(error); // an error occurred
+  } else {
+    console.log(data); // request succeeded
+
+ $('#imager img').attr('src', 'https://s3.amazonaws.com/' + data.Name+ '/' + data.Contents[0].Key +'?v=2')
+
+
+  }
+});
+
+/*$.ajax({
+    method: 'GET',
+    url: 'http://s3.amazonaws.com/hungryapp/greg1profile.jpg',
+    success: function(data){
+        console.log(data)
+
+    },
+    error: function(error){
+        console.log(error)
+    }
+})*/
+</script>
+
+    </body>
+</html>

@@ -1,0 +1,16 @@
+
+<ion-view view-title="<i class='ion-fork'></i><span class='apptitle'>{{appTitle}}</span> <i class='ion-knife'></i>">
+  <ion-content>
+
+<ion-list>
+ <div ng-if="nofriends == 'true'"><h4 style="text-align: center;">{{username}} does not have any followers yet!</h4></div>     
+    <ion-item item="item" ng-repeat="friend in friends" class="mentionWrapper item-divider" ng-click="openMentionsuser()" data-user="{{friend.username}}">
+       <div class="userpill-list"><img ng-src="{{friend.userImage}}"/></div>
+       <h3 class="mention friendsitem">&nbsp;<span>@</span>{{friend.username}}</h3>      
+    </ion-item>
+  </ion-list> 
+  
+</ion-content>
+</ion-view>
+
+

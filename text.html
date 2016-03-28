@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.js"></script>
+        <script src="oauth-signature.min.js"></script>
+    </head>
+    <body ng-app="plunker">
+        <div  ng-controller="MainCtrl">
+        	<div ng-click="clickme()">Click Me</div>
+            <p><date-input name="info.name" message="info.message"></date-input></p>
+            <ul>
+                <li data-ng-repeat="business in businesses">
+                    {{business.name}}
+                </li>
+            </ul>
+        </div>
+        <script>
+            function randomString(length, chars) {
+                var result = '';
+                for (var i = length; i > 0; --i) result += chars[Math.round(Math.random() * (chars.length - 1))];
+                return result;
+            }
+
+            var app = angular.module('plunker', []);
+            app.controller('MainCtrl', ['$scope', 'MyYelpAPI', function($scope, MyYelpAPI) {
+                $scope.businesses = [];
+
+$scope.clickme = function(){
+	                MyYelpAPI.retrieveYelp('somecallback').success(function(data) {
+                    $scope.businesses = data.businesses;
+
+                });
+}
+            }]).factory("MyYelpAPI", function($http) {
+                return {
+                    "retrieveYelp": function(name, callback) {
+                        var method = 'GET';
+                        var url = 'http://api.yelp.com/v2/search';
+                        var params = {
+                                callback: callback,
+                                location: 'San+Francisc',
+		oauth_consumer_key: 'XaMXvnBYzAgJ_DIVlYWkUg', //Consumer Key
+		oauth_token: 'X8WUIn-_K1uGIJuLYA5JHpzBLVhEWlc3', //Token
+                                oauth_signature_method: "HMAC-SHA1",
+                                oauth_timestamp: new Date().getTime(),
+                                oauth_nonce: randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
+                                term: 'food'
+                            };
+	var consumerSecret = 'rUtcaYKAEGQZVH7XqvKW8WBUJ7I'; //Consumer Secret
+	var tokenSecret = 'bPLsTjyRQQeAGOSj1NoRqEVLk-o'; //Token Secret
+                        var signature = oauthSignature.generate(method, url, params, consumerSecret, tokenSecret, { encodeSignature: false});
+                        params['oauth_signature'] = signature;
+                        $http.jsonp(url, {params: params}).success(callback);
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

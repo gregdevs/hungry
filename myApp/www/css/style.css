@@ -1,0 +1,487 @@
+/* Empty. Add your own CSS if you like */
+
+
+
+a, a:link{
+    text-decoration: none;
+    color: #0198C9;
+}
+
+h1, h2, h3, h4, ul li, span, a{
+font-family: 'Quicksand', sans-serif !important;
+
+}
+
+h1{
+  text-transform: uppercase;
+  font-size:.9em!important;
+}
+
+h1, h2, h3, h4{
+    font-weight:700!important;
+    text-transform: uppercase;
+    color:#0198C9;
+}
+.previous-title{
+  display:none!important;
+}
+
+h3{
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 0px;
+    margin-bottom: 0;
+    /*clear: left;*/
+    float: left;
+    color:#0198C9;
+  
+}
+
+h3 span{
+    font-weight:300;
+    color: #8899a6;
+    float:left;
+    text-transform: none;
+}
+
+h3 a{
+    float: left;
+}
+
+h2{
+    text-align: center;
+    font-size:1.1em;
+    margin-top:5px;
+    margin-bottom:0;
+}
+
+h4{
+    padding-left: 1em;
+    color: #333;
+    font-size: .9em;
+    line-height: 30px;
+    margin: 10px 0 0;
+    /* margin-bottom: 0; */
+    background: #f5f5f5;
+}
+
+.powerbar{
+    height:2px;
+    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#ff6600+1,c72200+100 */
+/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#fced19+0,c40307+100 */
+width:100%;  
+background: #fced19; /* Old browsers */
+background: -moz-linear-gradient(left,  #fced19 0%, #c40307 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,#fced19), color-stop(100%,#c40307)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left,  #fced19 0%,#c40307 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left,  #fced19 0%,#c40307 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(left,  #fced19 0%,#c40307 100%); /* IE10+ */
+background: linear-gradient(to right,  #fced19 0%,#c40307 100%); /* W3C */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fced19', endColorstr='#c40307',GradientType=1 ); /* IE6-9 */
+
+
+}
+
+.powercover{
+background:#fff;
+    height:2px;
+    position: absolute;
+    right:0;
+}
+
+
+.activitysmall{
+    display:block;
+    padding-left:1em;
+    font-size:.9em;
+    font-weight: 400;
+}
+.conn{
+    display: block;
+    font-weight: 600;
+    color: #A2251C;
+    font-size: 1.1em;
+}
+
+.followerspan{
+     display: block;
+    color: #000;
+    font-size: .9em; 
+}
+.foodbuckets h4{
+    background: #fff;
+}
+
+.ion-fork, .ion-knife{
+    font-size:1.7em;
+ 
+}
+
+.tab-item .icon {
+    height: 25px;
+    font-size: 25px;
+}
+
+.tabs-positive > .tabs, .tabs.tabs-positive{
+    height:40px;
+}
+
+
+.bar-header{
+    background: #0198C9!important;
+}
+
+.bar-footer, .tab-nav{
+    background: #333333!important;
+}
+h1.hometitle{
+    width: 100%;
+    text-align: center;
+    color:#ffffff;
+}
+.apptitle{
+    vertical-align: top;
+    padding: 0 10px 0 10px;
+    font-weight: 700;
+    font-size: .9em;
+}
+
+.helptitle{
+    font-size:1.3em;
+}
+#search-map{
+    width:100%;
+    height:1000px;
+    position: relative;
+}
+.scroll {
+
+height: 100%;
+
+}
+.infowindow{
+  color: #000;
+}
+
+.mainsection{
+	position: absolute;
+	width:100%;
+	height: 168px;
+	display:none;
+	overflow: scroll;
+    -webkit-overflow-scrolling:touch;
+    -webkit-transition:320ms ease;
+    -moz-transition:320ms ease;
+    -ms-transition:320ms ease;
+    -o-transition:320ms ease;
+    transition:320ms ease;
+}
+
+.foodbuckets{
+    font-weight: 700!important;
+    text-transform: uppercase;
+    border: 1px solid #E6E6E6;
+    border-top: 0;
+    border-right: 0;
+    text-align: center;
+    padding:.2em 0 0;
+}
+
+.foodbuckets:nth-child(3n){
+    border-right:  1px solid #E6E6E6;
+}
+
+
+
+/*bootstrap overrides*/
+.container-fluid{
+    padding:0;
+}
+.col-xs-12, .col-xs-4{
+    padding:0;
+}
+.row{
+    padding:0;
+    margin:0;
+}
+
+#singlePlace{
+display: block;
+bottom: 0;
+/* visibility: hidden; */
+/* padding-top: 25px; */
+background: #ffffff;
+position: fixed;
+width: 100%;
+z-index: 999999;
+
+-moz-transform: translateX(0%) translateY(100%);
+-webkit-transform: translateX(0%) translateY(100%);
+-o-transform: translateX(0%) translateY(100%);
+-ms-transform: translateX(0%) translateY(100%);
+transform: translateX(0%) translateY(140%);
+}
+
+.slideLeft{
+-moz-transform: translateX(0px) translateY(0px);
+-webkit-transform: translateX(0px) translateY(0px)!important;
+-o-transform: translateX(0px) translateY(0px);
+-ms-transform: translateX(0px) translateY(0px);
+transform: translateX(0px) translateY(0px)!important;
+
+}
+
+.ion-close-round{
+    position: absolute;
+    right:2em;
+    top:0;
+    z-index: 9;
+}
+
+li.placelist span{
+    float:left;
+    padding:2px;
+    clear:both;
+}
+
+.placeInfo{
+overflow: auto;
+}
+
+#yum textarea{
+height: 140px;
+    /* float: left; */
+    width: 100%;
+    border: 1px solid #c4c4c4;
+
+}
+
+.gallery {
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.mentionWrapper{
+    /* border-radius: 20px; */
+    padding: 1em !important;
+    /* margin-bottom: 10px; */
+    overflow: auto;
+    background: #fff;
+    white-space: initial;
+}
+
+
+.fromtime, .byline{
+    font-size:1em;
+    float:left;
+    color: #8899a6;
+    font-weight: 700;
+}
+
+.byline{
+    /*clear:both;*/
+}
+
+
+span.minititle{
+    font-size: 1em;
+    color: #A2251C;
+    float: left;
+    padding-top: 5px;
+    clear: both;
+    margin-bottom: 4px;
+    padding-bottom: 5px;
+}
+
+
+.userpill{
+    width: 20px;
+    height: 20px;
+    background: #c4c4c4;
+    border-radius: 100%;
+    float: left;
+    margin-right: 2px;
+    clear: left;
+    overflow: hidden;
+}
+
+.userpill img, .userpill-large img, .userpill-list img{
+    width: 100%;
+}
+
+
+.userpill-large{
+    width: 80px;
+    height: 80px;
+    background: #c4c4c4;
+    border-radius: 100%;
+    overflow: hidden;
+    margin: 10px auto;
+    margin-bottom: 2px;
+}
+
+.userpill-list{
+    width: 40px;
+    height: 40px;
+    background: #c4c4c4;
+    border-radius: 100%;
+    overflow: hidden;
+    margin-bottom: 2px;
+    float:left;
+}
+
+.friendsitem{
+  line-height: 40px;
+  margin-left: 6px!important;
+}
+
+.userlocation{
+    text-align: center;
+}
+
+
+.interactionbox{
+   float: left;
+    height: 40px;
+    clear: both;
+    padding-top: 10px;
+    color: #A3B0B5;
+    font-size: 1.3em;
+
+}
+
+.interactionbox i{
+  margin-right:1em;
+}
+
+.ion-thumbsup, .ion-thumbsdown{
+    font-size:1.1em;
+    -webkit-transition: all 150ms ease;
+-moz-transition: all 150ms ease;
+-ms-transition: all 150ms ease;
+-o-transition: all 150ms ease;
+transition: all 150ms ease;
+}
+
+.ion-thumbsup{
+  position: absolute;
+    left: 10px;
+}
+
+.ion-thumbsdown{
+  position: absolute;
+    left: 60px;
+}
+
+
+
+.rotateicon{
+    display: block;
+    font-size: 2.6em;
+    -moz-transform: rotate(90deg);
+-webkit-transform: rotate(90deg);
+-o-transform: rotate(90deg);
+-ms-transform: rotate(90deg);
+transform: rotate(90deg);
+}
+
+
+
+
+
+
+.staractive{
+font-size:1.4em;
+}
+
+
+
+.activeicon{
+    color:#0198C9;
+}
+
+.active{
+  background: #0198C9;
+}
+
+.activewhite{
+  color:#fff!important;
+}
+.activewhitesubtitle{
+  color:#fff!important;
+    font-size: .7em!important;
+
+}
+
+.engageuser{
+  margin:0 auto;
+}
+
+.engageuser i, .engageuser a{
+      text-align: center;
+    display: block;
+    font-size: 2em;
+    color: #0198C9;
+}
+
+
+.foodbuckets span{
+      line-height: .7em;
+      font-size: .7em;
+      color:#0198C9;
+}
+
+.subtitle{
+  /*color:#0198C9;*/
+  font-size: .7em;
+}
+.added{
+    color:#fff!important;
+    font-size: .7em!important;
+
+}
+
+#forkthisinput{
+ min-height:200px;
+
+}
+
+.hide-item{
+  display:none;
+}
+
+.backbtn{
+  float:left;
+  font-size: 1.5em;
+}
+
+#location-map{
+    width: 100%;
+    height:100%;
+}
+.location-wrapper{
+    background: #c4c4c4;
+    width:100%;
+    height:100%;
+    position: absolute;
+    -webkit-transition: all 300ms ease;
+-moz-transition: all 300ms ease;
+-ms-transition: all 300ms ease;
+-o-transition: all 300ms ease;
+transition: all 300ms ease;
+-moz-transform: translateX(0%) translateY(-190%);
+-webkit-transform: translateX(0%) translateY(-190%);
+-o-transform: translateX(0%) translateY(-190%);
+-ms-transform: translateX(0%) translateY(-190%);
+transform: translateX(0%) translateY(-190%);
+z-index:9;
+}
+
+ .cardSlideIn{
+  -moz-transform: translateX(0%) translateY(0%);
+-webkit-transform: translateX(0%) translateY(0%);
+-o-transform: translateX(0%) translateY(0%);
+-ms-transform: translateX(0%) translateY(0%);
+transform: translateX(0%) translateY(0%);
+ }
+

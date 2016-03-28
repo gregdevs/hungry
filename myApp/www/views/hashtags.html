@@ -1,0 +1,23 @@
+<ion-view view-title="<i class='ion-fork'></i><span class='apptitle'>{{appTitle}}</span> <i class='ion-knife'></i>">
+  <ion-content>
+  <ion-refresher pulling-icon="ion-fork" spinner="spiral"
+    on-refresh="doRefresh()">
+  </ion-refresher>  
+  
+
+   <ion-list>
+    <ion-item item="item" ng-repeat="mention in mentions" class="mentionWrapper item-divider">
+    
+     <h3 class="mention" ng-bind-html="mention | getPlace">&nbsp;<span>@</span>{{mention | getPlace}}</h3>
+      <span class="fromtime">&nbsp;{{mention.created_date | fromTime}} ago</span>
+       <span class="minititle" ng-bind-html="mention.placemention | getHash">{{mention.placemention | getHash}}&nbsp</span>
+      <div class="userpill"><img ng-src="{{mention.mentions.userImage}}"/></div> 
+        <span ng-if="mention.mentions.username == localUser" class="byline" ng-bind-html="mention.username | getUser">{{mention.username | getUser}}</span>
+        <span ng-if="mention.mentions.username != localUser" ng-bind-html="mention.username | getUser" class="byline">{{mention.username | getUser}}</span>
+    </ion-item>
+  </ion-list>
+
+
+
+</ion-content>
+</ion-view>
