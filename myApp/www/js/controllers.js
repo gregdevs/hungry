@@ -544,7 +544,7 @@ var imageid = $('#idHolderUser').attr('data-userid')
 new AWS.S3().getObject({Bucket: 'hungryapp', Key: imageUser + imageid + 'profile'}).on('success', function(response) {
   console.log("Key was", response.request.params.Key);
 
-$scope.userImage = 'https://s3.amazonaws.com/' + 'hungryapp' + '/' + imageUser + imageid + 'profile' +'?v=2'
+$scope.userImage = 'https://s3.amazonaws.com/' + 'NAMEOFAPP' + '/' + imageUser + imageid + 'profile' +'?v=2'
 
 
 }).send();			
