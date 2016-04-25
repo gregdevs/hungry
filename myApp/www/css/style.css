@@ -4,7 +4,7 @@
 
 a, a:link{
     text-decoration: none;
-    color: #0198C9;
+    color: #FF8450;
 }
 
 h1, h2, h3, h4, ul li, span, a{
@@ -20,7 +20,7 @@ h1{
 h1, h2, h3, h4{
     font-weight:700!important;
     text-transform: uppercase;
-    color:#0198C9;
+    color:#FF8450;
 }
 .previous-title{
   display:none!important;
@@ -33,7 +33,7 @@ h3{
     margin-bottom: 0;
     /*clear: left;*/
     float: left;
-    color:#0198C9;
+    color:#FF8450;
   
 }
 
@@ -128,7 +128,7 @@ background:#fff;
 
 
 .bar-header{
-    background: #0198C9!important;
+    background: #FF8450!important;
 }
 
 .bar-footer, .tab-nav{
@@ -305,10 +305,27 @@ span.minititle{
     overflow: hidden;
 }
 
-.userpill img, .userpill-large img, .userpill-list img{
+.userpill img, .userpill-large img, .userpill-list img, .photo-holder img{
     width: 100%;
 }
 
+
+.photo-holder{
+    float:left;
+    height:90px;
+    overflow: hidden;
+}
+
+.box-photo{
+    margin-top:-35px;
+}
+.header-wrapper{
+    background: #FFEFD5;
+}
+
+.has-header{
+    top: 34px;
+}
 
 .userpill-large{
     width: 80px;
@@ -397,11 +414,11 @@ font-size:1.4em;
 
 
 .activeicon{
-    color:#0198C9;
+    color:#FF8450;
 }
 
 .active{
-  background: #0198C9;
+  background: #FF8450;
 }
 
 .activewhite{
@@ -421,18 +438,18 @@ font-size:1.4em;
       text-align: center;
     display: block;
     font-size: 2em;
-    color: #0198C9;
+    color: #FF8450;
 }
 
 
 .foodbuckets span{
       line-height: .7em;
       font-size: .7em;
-      color:#0198C9;
+      color:#FF8450;
 }
 
 .subtitle{
-  /*color:#0198C9;*/
+  /*color:#FF8450;*/
   font-size: .7em;
 }
 .added{
@@ -459,7 +476,7 @@ font-size:1.4em;
     width: 100%;
     height:100%;
 }
-.location-wrapper{
+.card-wrapper{
     background: #c4c4c4;
     width:100%;
     height:100%;

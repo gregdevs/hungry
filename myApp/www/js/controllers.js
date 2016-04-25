@@ -2,9 +2,6 @@ var localuserid = localStorage.getItem('userid')
 var localusername = localStorage.getItem('user')
 
 hungryApp.controller('loginCtrl', function($scope, HungryFactory, $location){
-
-
-
 	$scope.login = function() {
 		var username = document.getElementById('username').value;
 		var password = document.getElementById('password').value;
@@ -15,7 +12,7 @@ hungryApp.controller('loginCtrl', function($scope, HungryFactory, $location){
 		console.log(loginDetails)
 
 		HungryFactory.loginUser(loginDetails).success(function(success) {
-			console.log(success)
+			//console.log(success)
 
 			localStorage.setItem("sessionToken", success.sessionToken);
 			localStorage.setItem("user", success.username);
@@ -24,15 +21,11 @@ hungryApp.controller('loginCtrl', function($scope, HungryFactory, $location){
 				where: {
 					username: localStorage.getItem("user")
 				}
-
 			}
-
 		}).error(function(error) {
 			console.log(error)
 		})
-	}
-
-
+}
 }).controller('homeCtrl', function($stateParams, $scope, $location, $state){
 	  localStorage.setItem("controller", 'home')
 
@@ -42,14 +35,10 @@ hungryApp.controller('loginCtrl', function($scope, HungryFactory, $location){
 		var foodType = angular.element(event.currentTarget).find('h4').html();
 		console.log(foodType)
 		$location.path('/tab/search/' + foodType)
-	}
-  
+	} 
 }).controller('MainCtrl', function($state) {
-  //console.log('HomeTabCtrl');
   this.onTabSelected = function(_scope){
-    console.log("onTabSelected - main");
     if ( _scope.title === 'Home') {
-    		//console.log('search')
     		localStorage.setItem('view', 'search')
     } 
      if ( _scope.title === 'Forks') {
@@ -65,17 +54,13 @@ hungryApp.controller('loginCtrl', function($scope, HungryFactory, $location){
 }).controller('usertabCtrl', function($scope, $stateParams){
 	$scope.username = localStorage.getItem('user')
 
-
 }).controller('mentionsCtrl', function($scope, $stateParams, HungryFactory, $http){ 
-
-
 	$scope.placeFilteringIgnored = false;
 
 $scope.togglePlaceFiltering = function() {
     $scope.placeFilteringIgnored = !$scope.placeFilteringIgnored;
 }
 	  localStorage.setItem("controller", 'mentions')
-//alert()
 	$scope.localUser = localStorage.getItem('user');
 
 // navigator
@@ -261,7 +246,6 @@ var hashtagsonly = forktext.match(/#\S+/g);
 			}
 		}
 
-console.log(hashtagsArray)
 
 
 var thisId =  localStorage.getItem('objectId');
@@ -426,21 +410,53 @@ console.log(myLatLng)
 
 	});
 
-
-
-
-
-
-
-
-
 	}).error(function(error){
           console.log(error)
 	});
 }
-$scope.closeLocationPane = function(){
-	$('.location-wrapper').removeClass('cardSlideIn');
 
+
+$scope.showPhotos = function(){
+    $('.photos-wrapper').addClass('cardSlideIn');
+    $scope.photosOfPlace = [
+       {
+       	photo: "http://static.communitytable.parade.com/wp-content/uploads/2012/02/dan-marino-pasta-bolognese_getty-images.jpg"
+       },
+       {
+       	photo: "http://static.communitytable.parade.com/wp-content/uploads/2012/02/dan-marino-pasta-bolognese_getty-images.jpg"
+       },
+       {
+       	photo: "http://cdn-image.myrecipes.com/sites/default/files/styles/300x300/public/image/recipes/ck/10/01/shrimp-fra-diavolo-ck-x.jpg"
+       },
+       {
+       	photo: "http://static.communitytable.parade.com/wp-content/uploads/2012/02/dan-marino-pasta-bolognese_getty-images.jpg"
+       }                     
+    ]
+	
+	angular.forEach($scope.photosOfPlace, function(photo, i){
+	var img = new Image();
+	img.src = photo.photo;	
+		img.onload = function() {
+		var thisAspectRatio = getAspectRatio(this.width, this.height)
+				if (thisAspectRatio === "16:9"){
+				 // 16x9 leave as is
+				} else if (thisAspectRatio === "4:3"){
+				   angular.element('.photo-holder').eq(i).find('img').addClass('box-photo')
+				}
+		}
+	})
+}
+
+
+
+$scope.closeLocationPane = function(){
+	$('.card-wrapper').removeClass('cardSlideIn');
+
+}
+
+function getAspectRatio(width, height) {
+    var ratio = width / height;
+    return ( Math.abs( ratio - 4 / 3 ) < Math.abs( ratio - 16 / 9 ) ) ? '4:3' : '16:9';
 }
 
 }).controller('userCtrl', function($scope, $stateParams, HungryFactory, $location, $timeout){
@@ -457,9 +473,7 @@ $scope.closeLocationPane = function(){
 		//console.log(success.results)
 		$scope.users = success;
 		console.log($scope.users[0])
-		//$scope.userImage = success.results[0].userImage;
 
-		//console.log($scope.userImage)
 
 		// get user reputation
 		HungryFactory.getReputations($stateParams.username).success(function(success) {
@@ -529,6 +543,10 @@ $scope.closeLocationPane = function(){
 													angular.element('.mylikes').triggerHandler('click');
 												}, 0);
 											}
+											else if (!localStorage.getItem("showTab")){
+												localStorage.setItem("showTab", "forks");
+
+											}
 
 						}).error(function(error) {
 							console.log(error)
@@ -541,10 +559,10 @@ $scope.closeLocationPane = function(){
 			console.log(angular.element('#idHolderUser').attr('data-username'))
 var imageUser = $('#idHolderUser').attr('data-username')
 var imageid = $('#idHolderUser').attr('data-userid')
-new AWS.S3().getObject({Bucket: 'hungryapp', Key: imageUser + imageid + 'profile'}).on('success', function(response) {
+new AWS.S3().getObject({Bucket: 'MyApp', Key: imageUser + imageid + 'profile'}).on('success', function(response) {
   console.log("Key was", response.request.params.Key);
 
-$scope.userImage = 'https://s3.amazonaws.com/' + 'hungryapp' + '/' + imageUser + imageid + 'profile' +'?v=2'
+$scope.userImage = 'https://s3.amazonaws.com/' + 'MyApp' + '/' + imageUser + imageid + 'profile' +'?v=2'
 
 
 }).send();			
@@ -1074,10 +1092,6 @@ function checkRepStatus(mentionrepped, success){
 	
 }
 
-
-
-
-
 function navfunction($http, $scope, HungryFactory) {
 	navigator.geolocation.getCurrentPosition(function(position) {
 
@@ -1091,15 +1105,9 @@ function navfunction($http, $scope, HungryFactory) {
 			method: 'GET',
 			url: 'http://maps.googleapis.com/maps/api/geocode/json?latlng=' + latitude + ',' + longitude + '&sensor=false'
 		}).success(function(success) {
-			//console.log(success.results[0].address_components)
-
-
 			// get neighborhood or city
 
 			for (var i = 0; i < success.results[0].address_components.length; i++) {
-
-				console.log(success.results[0].address_components[i].long_name)
-
 				if (success.results[0].address_components[i].types[0] === "neighborhood") {
 					$scope.appTitle = success.results[0].address_components[i].long_name
 					break;
@@ -1128,37 +1136,23 @@ function navfunction($http, $scope, HungryFactory) {
 				lat: latToUse,
 				lng: longToUse
 			}
-			geoArray.push(geoObject)
-			console.log(geoArray[0].lat)
-
-	
+			geoArray.push(geoObject)	
 			var latPlus = geoArray[0].lat + 10;
 			var latMinus = geoArray[0].lat - 10;
 
 			var lngPlus = geoArray[0].lng + 10;
-			var lngMinus = geoArray[0].lng - 10;
-
-			console.log(latPlus + ' ' + lngPlus)
-			console.log(latMinus + ' ' + lngMinus)
+			var lngMinus = geoArray[0].lng - 10
 
 			HungryFactory.getMentions(latMinus, latPlus, lngMinus, lngPlus).success(function(success) {
-				//console.log(success)
-
 				if (success.length === 0) {
 					$scope.nomentions = "none"
 					angular.element('ion-spinner').addClass('hide-item');
-					//alert("no forks yet!")
 				} else {
 					angular.element('ion-spinner').addClass('hide-item');
 					$scope.nomentions = "exist"
 					$scope.mentions = success;
-					//$scope.mentionid = success[0].id;
-					console.log($scope.mentions)
-
 					// if success get reputationss
 					HungryFactory.getRep(localuserid).success(function(success) {
-						console.log(success)
-
 						var mentionrepped = document.getElementsByClassName('repbtn');
 						var mentionliked = document.getElementsByClassName('likebtn');
 
@@ -1167,9 +1161,6 @@ function navfunction($http, $scope, HungryFactory) {
 					}).error(function(error) {
 						console.log(error)
 					});
-
-
-
 				}
 			}).error(function(error) {
 				console.log(error)

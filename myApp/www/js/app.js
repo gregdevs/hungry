@@ -1,6 +1,7 @@
 var authorname = localStorage.getItem('user');
-// Ionic Starter App
+localStorage.setItem('user', 'greg');
 
+// Ionic Starter App
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
 // the 2nd parameter is an array of 'requires'
@@ -17,10 +18,7 @@ var hungryApp = angular.module('hungryApp', ['ionic', 'ngCordova'])
     }
   });
  
-});
-
-
-hungryApp.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
+}).config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
   $stateProvider
     .state('login', {
@@ -197,10 +195,7 @@ hungryApp.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvid
     
     $urlRouterProvider.otherwise('/tab/home')
 
-});
-
-
-hungryApp.filter('fromTime', function () {
+}).filter('fromTime', function () {
   return function (item) {
     return timeSince(item);
   };
@@ -209,39 +204,20 @@ hungryApp.filter('fromTime', function () {
 
 hungryApp.filter('isMyprofile', function () {
   return function (item) {
-    console.log(item)
-
-    //return timeSince(item);
   };
-});
-
-
-
-
-hungryApp.filter('getHash', function () {
+}).filter('getHash', function () {
   return function (hash){
     var viewFromLocal = localStorage.getItem('view');
-    console.log(hash)
     return hash.replace(/\./g,' ').replace(/#(\S*)/g,'<a href="#/tab/' +  viewFromLocal + 'hashtags/$1">#$1</a>');
   }
-});
-
-hungryApp.filter('getPlace', function($stateParams) {
-
+}).filter('getPlace', function($stateParams) {
   return function(place) {
-    console.log("place")
-    console.log(place)
     var locationUrl = window.location.href;
     var parts = locationUrl.split('/');
     var interestingPart = parts[5];
-    console.log(interestingPart)
-
     var viewFromLocal = localStorage.getItem('view');
     var ctrlFromLocal = localStorage.getItem('controller')
     var showtabFromLocal = localStorage.getItem('showTab')
-
-    //console.log(place.id)
-
 
     switch (interestingPart) {
       case "mentions":
@@ -252,6 +228,11 @@ hungryApp.filter('getPlace', function($stateParams) {
         return '<a href="#/tab/' + viewFromLocal + 'place/' + $stateParams.placename + '/' + place.placeid + '">' + '@' + $stateParams.placename + '</a>';
         break;
 
+      case "mentionshashtags":
+      case "userhashtags":
+        return '<a href="#/tab/' + viewFromLocal + 'place/' + place.placeinfo.placename + '/' + place.placeid + '">' + '@' + place.placeinfo.placename + '</a>';
+        break;
+
       case "userplace":
         return '<a href="#/tab/' + viewFromLocal + 'place/' + $stateParams.placename + '/' + place.placeid + '">' + '@' + $stateParams.placename + '</a>';
         break;
@@ -259,8 +240,6 @@ hungryApp.filter('getPlace', function($stateParams) {
       case "searchplace":
         return '<a href="#/tab/' + viewFromLocal + 'place/' + $stateParams.placename + '/' + place.placeid + '">' + '@' + $stateParams.placename + '</a>';
         break;
-
-
     }
 
     if (interestingPart === "user" && showtabFromLocal === "forks" || interestingPart === "mentionsuser" && showtabFromLocal === "forks" || interestingPart === "searchuser" && showtabFromLocal === "forks") {
@@ -276,10 +255,7 @@ hungryApp.filter('getPlace', function($stateParams) {
     }
   }
 
-});
-
-
-hungryApp.directive('placeDirective', ['$timeout', function($timeout) {
+}).directive('placeDirective', ['$timeout', function($timeout) {
   return {
     restrict: 'A',
     link: function($scope, $elm, $attr) {
@@ -292,14 +268,9 @@ hungryApp.directive('placeDirective', ['$timeout', function($timeout) {
       }, 0)
     }
 
-
-
   }
 
-}])
-
-
-hungryApp.filter('getUser', function () {
+}]).filter('getUser', function () {
   return function (user){
     var viewFromLocal = localStorage.getItem('view');
     console.log(user)
@@ -314,18 +285,7 @@ hungryApp.filter('getUser', function () {
 
     }
   }
-});
-// #/tab/mentionsuser/{{mention.username}}
-/*hungryApp.filter('removeSpaces', function(){
-  return function(item){
-        console.log(item)
-
-    return decodeURIComponent();
-  }
-})*/
-
-
-hungryApp.filter('parseThis', function () {
+}).filter('parseThis', function () {
   return function (item) {
     //console.log(item)
     var array = [];
@@ -335,61 +295,7 @@ hungryApp.filter('parseThis', function () {
     //
     return array.join("").toString();
   };
-});
-
-localStorage.setItem('user', 'greg');
-            // like fork  
-              /*$scope.likeFork = function($event){
-                var usertolike = angular.element(event.currentTarget).attr('usertolike');
-                var likeicon = angular.element(event.currentTarget);
-                likeicon.addClass('staractive');
-                setTimeout(function(){
-                   //user.addClass('staractive')  
-                   likeicon.removeClass('staractive') 
-                  }, 600)                 
-                var user =  angular.element(event.currentTarget).parent().parent().find('.byline');
-                var userpill =  angular.element(event.currentTarget).parent().parent().find('.userpill');
-                setTimeout(function(){
-                 //user.addClass('staractive')  
-                 userpill.addClass('staractive')
-                  setTimeout(function(){
-                   //user.addClass('staractive')  
-                   userpill.removeClass('staractive') 
-                  }, 600)                 
-                }, 300)
-                
-                var like = {
-                  value: 100,
-                  username:  usertolike
-                }
-                HungryFactory.postLike(like, usertolike).success(function(success){
-                      console.log(success)
-
-                });
-              }
-
-            //unline fork
-
-              $scope.unlikeFork = function($event){
-                var usertounlike = angular.element(event.currentTarget).attr('usertounlike');
-                angular.element(event.currentTarget).addClass('staractive')
-                var unlike = {
-                  value: 0,
-                  username:  usertounlike
-                }
-                HungryFactory.postUnLike(unlike, usertounlike).success(function(success){
-                      console.log(success)
-
-                });
-              }*/
-
-//
-
-
-
-//like directive
-
-hungryApp.directive('likeFork', function(HungryFactory){
+}).directive('likeFork', function(HungryFactory){
     return{
         restrict: 'A',
         link: function($scope, elm, attr){
@@ -430,11 +336,7 @@ hungryApp.directive('likeFork', function(HungryFactory){
 
     }
 
-})
-
-//unlike directive
-
-hungryApp.directive('unlikeFork', function(HungryFactory){
+}).directive('unlikeFork', function(HungryFactory){
     return{
         restrict: 'A',
         link: function($scope, elm, attr){
@@ -477,11 +379,7 @@ hungryApp.directive('unlikeFork', function(HungryFactory){
 
     }
 
-})
-
-
-
-hungryApp.directive('favoriteThis', function(HungryFactory){
+}).directive('favoriteThis', function(HungryFactory){
 
   return{
     restrict: 'A',
@@ -564,8 +462,6 @@ function postRep(value, mentionid, placeid, HungryFactory, $scope){
                   authorname:  authorname,
                   
                 }
-
-                console.log(usertorep)
                // post like
                 HungryFactory.postRep(usertorep).success(function(success){
                       console.log(success)
@@ -583,7 +479,6 @@ function deleteRep(reputationid, HungryFactory, $scope){
 
                // post like
                 HungryFactory.deleteRep(reputationid).success(function(success){
-                      console.log(success)
                       //$scope.reputationid = success.id;
                       //console.log( $scope.reputationid)
 
@@ -592,32 +487,3 @@ function deleteRep(reputationid, HungryFactory, $scope){
                 });
 
 }
-
-/*var DURATION_IN_SECONDS = {
-  epochs: ['year', 'month', 'day', 'hour', 'minute'],
-  year:   31536000,
-  month:  2592000,
-  day:    86400,
-  hour:   3600,
-  minute: 60
-};*/
-
-/*function getDuration(seconds) {
-  var epoch, interval;
-
-  for (var i = 0; i < DURATION_IN_SECONDS.epochs.length; i++) {
-    epoch = DURATION_IN_SECONDS.epochs[i];
-    interval = Math.floor(seconds / DURATION_IN_SECONDS[epoch]);
-    if (interval >= 1) {
-      return { interval: interval, epoch: epoch };
-    }
-  }
-
-};*/
-
-/*function timeSince(date) {
-  var seconds = Math.floor((new Date() - new Date(date)) / 1000);
-  var duration = getDuration(seconds);
-  var suffix  = (duration.interval > 1 || duration.interval === 0) ? 's' : '';
-  return duration.interval + ' ' + duration.epoch + suffix;
-};*/

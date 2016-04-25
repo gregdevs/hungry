@@ -4,11 +4,7 @@ hungryApp.factory('HungryFactory', function($rootScope, $http){
 
 
 //login
-
-
-
-
-          
+        
 HungryFactory.getItems = function(searchthis, latLocation, longLocation) {
 
 	var method = 'GET';
@@ -49,7 +45,7 @@ HungryFactory.getAllMentions = function(){
 	return $http({
 	method: 'GET',
 	url: urlBase + 'mentions/',
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }
@@ -60,7 +56,7 @@ HungryFactory.getMentions = function(lat_minus, lat_plus, lng_minus, lng_plus){
 	return $http({
 	method: 'GET',
 	url: urlBase + 'mentions/?ordering=-created_date&lat_minus=' + lat_minus + '&lat_plus=' + lat_plus + '&lng_minus=' + lng_minus + '&lng_plus=' + lng_plus,
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }
@@ -69,7 +65,7 @@ HungryFactory.getMentionsByUser = function(username){
 	return $http({
 	method: 'GET',
 	url: urlBase + 'mentions/?ordering=-created_date&username=' + username,
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }
@@ -78,7 +74,7 @@ HungryFactory.getMentionsByUser = function(username){
 	return $http({
 	method: 'GET',
 	url: urlBase + 'mentions/?ordering=-created_date&placename=' + placename + '&lat=' + lat + '&lng=' + lng,
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }*/
@@ -87,7 +83,7 @@ HungryFactory.getMentionsByPlace = function(placeid){
 	return $http({
 	method: 'GET',
 	url: urlBase + 'mentions/?ordering=-created_date&placeid=' + placeid,
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }
@@ -96,7 +92,7 @@ HungryFactory.getMentionsByHashTag = function(hashtag){
 	return $http({
 	method: 'GET',
 	url: urlBase + 'mentions/?ordering=-created_date&hashtags=' + hashtag,
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }
@@ -105,7 +101,7 @@ HungryFactory.getReputations = function(username){
 	return $http({
 	method: 'GET',
 	url: urlBase + 'reputations/?username=' + username,
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }
@@ -115,7 +111,7 @@ HungryFactory.getUsers = function(username){
 	return $http({
 	method: 'GET',
 	url: urlBase + 'users/?username=' + username,
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }
@@ -128,7 +124,7 @@ HungryFactory.getFollowing = function(username){
 	return $http({
 	method: 'GET',
 	url: urlBase + 'friends.json?username=' + username,
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }
@@ -138,7 +134,7 @@ HungryFactory.getFollowers = function(userid){
 	return $http({
 	method: 'GET',
 	url: urlBase + 'friends.json?friendswith=' + userid,
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }
@@ -158,7 +154,7 @@ HungryFactory.createPlace = function(place){
 		method: 'POST',
 		url: urlBase + 'places.json',
 		data: place,
-		headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+		headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 	})
 }
 
@@ -166,7 +162,7 @@ HungryFactory.checkForPlace = function(placename, lat_minus, lat_plus, lng_minus
 	return $http({
 	method: 'GET',
 	url: urlBase + 'places/?ordering=-created_date&placename=' +  placename + '&lat_minus=' + lat_minus + '&lat_plus=' + lat_plus + '&lng_minus=' + lng_minus + '&lng_plus=' + lng_plus,
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }
@@ -175,7 +171,7 @@ HungryFactory.getPlace = function(placeid){
 	return $http({
 	method: 'GET',
 	url: urlBase + 'places/' +  placeid + '.json',
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }
@@ -186,7 +182,7 @@ HungryFactory.getFavorites = function(userid){
 	return $http({
 	method: 'GET',
 	url: urlBase + 'favorites.json?userid=' + userid,
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }
@@ -197,7 +193,7 @@ HungryFactory.addFavorite = function(addFavorite){
 	method: 'POST',
 	url: urlBase + 'favorites.json',
 	data: addFavorite,
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }
@@ -206,7 +202,7 @@ HungryFactory.deleteFavorite = function(deleteFavorite){
 	return $http({
 	method: 'DELETE',
 	url: urlBase + 'favorites/' + deleteFavorite + '/',
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }
@@ -220,7 +216,7 @@ HungryFactory.addMention = function(addMention){
 	method: 'POST',
 	url: urlBase + 'mentions.json',
 	data: addMention,
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }
@@ -233,7 +229,7 @@ HungryFactory.deleteRep = function(unrep){
 	return $http({
 	method: 'DELETE',
 	url: urlBase + 'reputations/' + unrep + '/',
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }
@@ -242,7 +238,7 @@ HungryFactory.getRep = function(userid){
 	return $http({
 	method: 'GET',
 	url: urlBase + 'reputations/?author=' + userid,
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}		
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}		
 	})
 }
 
@@ -253,7 +249,7 @@ HungryFactory.postRep = function(usertorep){
 	method: 'POST',
 	url: urlBase + 'reputations/',
 	data: usertorep,
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }
@@ -266,24 +262,10 @@ HungryFactory.postLike = function(mentiontoLike){
 	method: 'POST',
 	url: urlBase + 'likes/',
 	data: mentiontoLike,
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
+	headers: {"Authorization" : "Token c8ceafa8fbb3ac75196e8fbce428304e5842ed52"}
 });
 
 }
-
-
-
-/*HungryFactory.getLike = function(username){
-	return $http({
-	method: 'GET',
-	url: urlBase + 'likes/?username=' + username,
-	headers: {"Authorization" : "Token d893c9d137530bb4df69ec39545b4c57cba54dcf"}
-});
-
-}*/
-
-
-
 
 return HungryFactory
 });

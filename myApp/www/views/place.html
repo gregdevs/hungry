@@ -1,10 +1,21 @@
 
 <ion-view view-title="<i class='ion-fork'></i><span class='apptitle'>{{appTitle}}</span> <i class='ion-knife'></i>">
   <ion-content>
-     <div class="location-wrapper">
+  <!-- location wrapper-->
+     <div class="card-wrapper location-wrapper">
        <span class="ion-close-round" ng-click="closeLocationPane()"></span>
        <div id="location-map"></div>
      </div>
+
+<!--Photo Wrapper-->
+     <div class="card-wrapper photos-wrapper">
+       <span class="ion-close-round" ng-click="closeLocationPane()"></span>
+          <div class="col-50 photo-holder" ng-repeat="photo in photosOfPlace">
+              <img src="{{photo.photo}}"/>
+          </div>
+     </div>      
+
+<div class="header-wrapper">
       <div id="idHolderUser" class="userpill-large" object-id="{{user.id}}" data-username="{{user.username}}"><img ng-src="{{user.userImage}}"/></div>
       <div class="userlocation">
         <!--<span>{{user.city}}, {{user.state}}</span>  -->
@@ -13,23 +24,29 @@
          <!-- <a href="#/tab/userfollowing/{{user.username}}"> <span>Following</span></a>-->
           <a  href="#/tab/userfollowers/{{user.username}}"><span class="followerspan">{{favoriteCount}} Followers</span></a>
                       
-      </div>  
+      </div>
+</div>
+        
       <div class="row engageuser">
-           <div class="col col-33 foodbuckets addfriendbucket" ng-click="openModal()">
+           <div class="col col-25 foodbuckets addfriendbucket" ng-click="openModal()">
              <i class="ion-fork" ></i>
              <span class="subtitle">Fork</span>
            </div>
-           <div class="col col-33 foodbuckets adfav" ng-click="addToFavorites($event)">
+           <div class="col col-25 foodbuckets adfav" ng-click="addToFavorites($event)">
              <i class="ion-ios-heart"></i>
              <span ng-if="addedsuccess == 'false'" class="subtitle">Favorite This</span>
-             <span ng-if="addedsuccess == 'true'" class="added">Added To Favorites!</span>
+             <span ng-if="addedsuccess == 'true'" class="added">Added!</span>
            </div>
-           <div class="col col-33 foodbuckets" ng-click="showLocation($event)">
+           <div class="col col-25 foodbuckets" ng-click="showLocation($event)">
              <i class="ion-ios-location"></i>
               <span class="subtitle">Location</span>
            </div>
-      </div>
+           <div class="col col-25 foodbuckets" ng-click="showPhotos($event)">
+             <i class="ion-images"></i>
+              <span class="subtitle">Photos</span>
+           </div>
 
+      </div>
 
 <div ng-if="nomentions == 'none'"><h4 style="text-align: center;">No Forks For this Restaurant yet! Be the first!</h4></div>
 
