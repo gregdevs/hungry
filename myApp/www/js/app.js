@@ -1,3 +1,10 @@
+    AWS.config.update({
+        accessKeyId : 'keyid',
+        secretAccessKey : 'Key'
+    });
+    
+    AWS.config.region = 'us-east-1';
+
 var authorname = localStorage.getItem('user');
 localStorage.setItem('user', 'greg');
 

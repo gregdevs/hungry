@@ -239,14 +239,11 @@ var hashtagsonly = forktext.match(/#\S+/g);
 		if (hashtagsonly === null) {
 
 		} else {
-
 			for (var i = 0; i < hashtagsonly.length; i++) {
 				var thisTag = hashtagsonly[i].replace('#', '').replace(/\./g, '');
 				hashtagsArray.push(thisTag)
 			}
 		}
-
-
 
 var thisId =  localStorage.getItem('objectId');
 
@@ -417,21 +414,37 @@ console.log(myLatLng)
 
 
 $scope.showPhotos = function(){
+ var placePhotos = []
+ var bucket = new AWS.S3({params: {Bucket: 'MyApp'}});
+var params = {
+  Bucket: 'MyApp', /* required */
+  Delimiter: '/',
+  EncodingType: 'url',
+  Prefix: 'places/' + $stateParams.placeid + '/'
+};
+bucket.listObjects(params, function(err,data){
+	   if (err){
+	   	console.log(err)
+	   } else{
+	   	console.log(data)
+     angular.forEach(data.Contents, function(item){
+     	console.log(item)
+     	 if (item.Size != 0){
+     	 	  var p = {
+     	 	  	photo: 'http://s3.amazonaws.com/MyApp/' + item.Key
+     	 	  }
+     	 	 placePhotos.push(p)
+     	 }
+       
+     })
+$scope.photosOfPlace = placePhotos;
+//console.log(placePhotos)
+	   }
+})
+
     $('.photos-wrapper').addClass('cardSlideIn');
-    $scope.photosOfPlace = [
-       {
-       	photo: "http://static.communitytable.parade.com/wp-content/uploads/2012/02/dan-marino-pasta-bolognese_getty-images.jpg"
-       },
-       {
-       	photo: "http://static.communitytable.parade.com/wp-content/uploads/2012/02/dan-marino-pasta-bolognese_getty-images.jpg"
-       },
-       {
-       	photo: "http://cdn-image.myrecipes.com/sites/default/files/styles/300x300/public/image/recipes/ck/10/01/shrimp-fra-diavolo-ck-x.jpg"
-       },
-       {
-       	photo: "http://static.communitytable.parade.com/wp-content/uploads/2012/02/dan-marino-pasta-bolognese_getty-images.jpg"
-       }                     
-    ]
+    
+ 
 	
 	angular.forEach($scope.photosOfPlace, function(photo, i){
 	var img = new Image();
