@@ -180,11 +180,11 @@ height: 100%;
 .foodbuckets{
     font-weight: 700!important;
     text-transform: uppercase;
-    border: 1px solid #E6E6E6;
     border-top: 0;
     border-right: 0;
     text-align: center;
     padding:.2em 0 0;
+    height: 40px;
 }
 
 .foodbuckets:nth-child(3n){
@@ -244,6 +244,7 @@ li.placelist span{
     clear:both;
 }
 
+
 .placeInfo{
 overflow: auto;
 }
@@ -263,7 +264,6 @@ height: 140px;
 
 .mentionWrapper{
     /* border-radius: 20px; */
-    padding: 1em !important;
     /* margin-bottom: 10px; */
     overflow: auto;
     background: #fff;
@@ -278,13 +278,19 @@ height: 140px;
     font-weight: 700;
 }
 
+.fromtime{
+    font-size: .8em;
+    margin-top: -2px;
+
+}
+
 .byline{
     /*clear:both;*/
 }
 
 
 span.minititle{
-    font-size: 1em;
+    font-size: .9em;
     color: #A2251C;
     float: left;
     padding-top: 5px;
@@ -311,9 +317,12 @@ span.minititle{
 
 
 .photo-holder{
-    float:left;
-    height:90px;
+    float: left;
+    height: 90px;
     overflow: hidden;
+    border: 1px solid #fff;
+    border-right: none;
+    border-top: none;
 }
 
 .box-photo{
@@ -321,6 +330,8 @@ span.minititle{
 }
 .header-wrapper{
     background: #FFEFD5;
+    height: 152px;
+    padding-top: 7px;
 }
 
 .has-header{
@@ -328,8 +339,8 @@ span.minititle{
 }
 
 .userpill-large{
-    width: 80px;
-    height: 80px;
+    width: 65px;
+    height: 65px;
     background: #c4c4c4;
     border-radius: 100%;
     overflow: hidden;
@@ -443,14 +454,15 @@ font-size:1.4em;
 
 
 .foodbuckets span{
-      line-height: .7em;
-      font-size: .7em;
-      color:#FF8450;
+    line-height: .7em;
+    font-size: .6em;
+    color: #FF8450;
+    display: block;
 }
 
 .subtitle{
   /*color:#FF8450;*/
-  font-size: .7em;
+  font-size: .6em;
 }
 .added{
     color:#fff!important;
@@ -501,4 +513,12 @@ z-index:9;
 -ms-transform: translateX(0%) translateY(0%);
 transform: translateX(0%) translateY(0%);
  }
+
+
+.spinner svg {
+    width: 28px;
+    height: 28px;
+    margin: 60px auto;
+    display: block;
+}
 

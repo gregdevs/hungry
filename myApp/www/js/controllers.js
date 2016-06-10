@@ -415,9 +415,9 @@ console.log(myLatLng)
 
 $scope.showPhotos = function(){
  var placePhotos = []
- var bucket = new AWS.S3({params: {Bucket: 'MyApp'}});
+ var bucket = new AWS.S3({params: {Bucket: 'myapp'}});
 var params = {
-  Bucket: 'MyApp', /* required */
+  Bucket: 'myapp', /* required */
   Delimiter: '/',
   EncodingType: 'url',
   Prefix: 'places/' + $stateParams.placeid + '/'
@@ -431,14 +431,16 @@ bucket.listObjects(params, function(err,data){
      	console.log(item)
      	 if (item.Size != 0){
      	 	  var p = {
-     	 	  	photo: 'http://s3.amazonaws.com/MyApp/' + item.Key
+     	 	  	photo: 'http://s3.amazonaws.com/myapp/' + item.Key
      	 	  }
      	 	 placePhotos.push(p)
      	 }
        
      })
-$scope.photosOfPlace = placePhotos;
-//console.log(placePhotos)
+     $timeout(function(){
+         $scope.photosOfPlace = placePhotos;
+
+     }, 100)
 	   }
 })
 

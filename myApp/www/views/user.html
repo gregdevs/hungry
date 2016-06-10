@@ -4,7 +4,7 @@
   <ion-content>
 		
 		<div ng-repeat="user in users">
-			
+			<div class="header-wrapper">
 			<div id="idHolderUser" class="userpill-large" data-userid="{{user.id}}" data-username="{{user.username}}"><img ng-src="{{userImage}}"/></div>
 			<div class="userlocation">
 				<span>{{user.city}}, {{user.state}}</span>	
@@ -12,6 +12,7 @@
 			   <!-- <a href="#/tab/userfollowing/{{user.username}}"> <span>Following</span></a>-->
 			    <a  href="#/tab/userfollowers/{{user.username}}"><span class="followerspan">Followers</span></a>
 			     	  		    
+			</div>
 			</div>	
 
 

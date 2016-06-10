@@ -1,6 +1,6 @@
     AWS.config.update({
         accessKeyId : 'keyid',
-        secretAccessKey : 'Key'
+        secretAccessKey : 'key'
     });
     
     AWS.config.region = 'us-east-1';
@@ -51,7 +51,7 @@ var hungryApp = angular.module('hungryApp', ['ionic', 'ngCordova'])
     }) 
     .state('tabs.search', {
       url: "/search/:foodName",
-      cache: false,
+      cache: true,
       views: {
         'home-tab': {
           templateUrl: "views/searchmap.html",
@@ -61,7 +61,7 @@ var hungryApp = angular.module('hungryApp', ['ionic', 'ngCordova'])
     })
     .state('tabs.searchplace', {
       url: "/searchplace/:placename/:placeid/:placeLat/:placeLng",
-      cache: false,
+      cache: true,
       views:{
         'home-tab':{
       templateUrl: "views/place.html",
@@ -81,7 +81,7 @@ var hungryApp = angular.module('hungryApp', ['ionic', 'ngCordova'])
     })
     .state('tabs.searchuser', {
       url: '/searchuser/:username',
-      cache: false,
+      cache: true,
       views:{
         'home-tab':{
           templateUrl: 'views/user.html',
@@ -111,7 +111,7 @@ var hungryApp = angular.module('hungryApp', ['ionic', 'ngCordova'])
     }) 
     .state('tabs.mentionsplace', {
       url: "/mentionsplace/:placename/:placeid",
-      cache: false,
+      cache: true,
       views:{
         'mentions-tab':{
       templateUrl: "views/place.html",
@@ -121,7 +121,7 @@ var hungryApp = angular.module('hungryApp', ['ionic', 'ngCordova'])
     }) 
     .state('tabs.mentionsuser', {
       url: '/mentionsuser/:username',
-      cache: false,
+      cache: true,
       views:{
         'mentions-tab':{
           templateUrl: 'views/user.html',
@@ -151,7 +151,7 @@ var hungryApp = angular.module('hungryApp', ['ionic', 'ngCordova'])
     })         
     .state('tabs.user', {
       url: '/user/:username',
-      cache: false,
+      cache: true,
       views:{
         'user-tab':{
           templateUrl: 'views/user.html',
@@ -161,7 +161,7 @@ var hungryApp = angular.module('hungryApp', ['ionic', 'ngCordova'])
     })   
     .state('tabs.userplace', {
       url: "/userplace/:placename/:placeid",
-      cache: false,
+      cache: true,
       views:{
         'user-tab':{
       templateUrl: "views/place.html",
