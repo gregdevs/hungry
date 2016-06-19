@@ -9,11 +9,19 @@
 
 <!--Photo Wrapper-->
      <div class="card-wrapper photos-wrapper">
-       <span class="ion-close-round" ng-click="closeLocationPane()"></span>
-          <div class="col-50 photo-holder" ng-repeat="photo in photosOfPlace">
-              <img ng-src="{{photo.photo}}"/>
+       <span class="ion-close-round" ng-click="closeLocationPane($event)"></span>
+          <div class="col-50 photo-holder" ng-click="openPhoto($event);" ng-repeat="photo in photosOfPlace">
+              <img class="placephoto" ng-src="{{photo.photo}}"/>
           </div>
      </div>      
+
+     <div class="card-wrapper photosingle-wrapper">
+       <span class="ion-close-round" ng-click="closeLocationPane($event)"></span>
+          <div class="">
+              <img ng-src="{{phototoshow}}"/>
+          </div>
+     </div>  
+
 
 <div class="header-wrapper">
       <div id="idHolderUser" class="userpill-large" object-id="{{user.id}}" data-username="{{user.username}}"><img ng-src="{{user.userImage}}"/></div>

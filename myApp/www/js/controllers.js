@@ -462,10 +462,15 @@ bucket.listObjects(params, function(err,data){
 	})
 }
 
+$scope.openPhoto = function($event){
+    var thisphoto = angular.element($event.currentTarget).find('.placephoto').attr('src');
+    $scope.phototoshow = thisphoto;
+    $('.photosingle-wrapper').addClass('cardSlideIn')
+}
 
-
-$scope.closeLocationPane = function(){
-	$('.card-wrapper').removeClass('cardSlideIn');
+$scope.closeLocationPane = function($event){
+	var $c = angular.element($event.currentTarget).parent();
+	 $c.removeClass('cardSlideIn');
 
 }
 
