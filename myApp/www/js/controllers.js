@@ -1,6 +1,19 @@
 var localuserid = localStorage.getItem('userid')
 var localusername = localStorage.getItem('user')
+var likesArray = [];
+			var latToUse;
+			var longToUse;
+			//store zip in array
+			var geoObject;	
+			var latPlus;
+			var latMinus;
 
+			var lngPlus;
+			var lngMinus;
+		var latitude ;
+		var longitude ;
+		var zipArray = [];
+		var geoArray = [];			
 hungryApp.controller('loginCtrl', function($scope, HungryFactory, $location){
 	$scope.login = function() {
 		var username = document.getElementById('username').value;
@@ -26,8 +39,10 @@ hungryApp.controller('loginCtrl', function($scope, HungryFactory, $location){
 			console.log(error)
 		})
 }
-}).controller('homeCtrl', function($stateParams, $scope, $location, $state){
+}).controller('homeCtrl', function($stateParams, $scope, $location, $state, $http, HungryFactory){
 	  localStorage.setItem("controller", 'home')
+// navigator
+navfunction($http, $scope, HungryFactory);
 
 	$scope.appTitle = "What Are You Feeling?"
 	$scope.foodtypes = ['italian', 'chinese', 'mexican', 'japanese', 'thai', 'burgers', 'pizza', 'vegan', 'turkish'];
@@ -62,9 +77,28 @@ $scope.togglePlaceFiltering = function() {
 }
 	  localStorage.setItem("controller", 'mentions')
 	$scope.localUser = localStorage.getItem('user');
+			HungryFactory.getMentions(latMinus, latPlus, lngMinus, lngPlus).success(function(success) {
+				if (success.length === 0) {
+					$scope.nomentions = "none"
+					angular.element('ion-spinner').addClass('hide-item');
+				} else {
+					angular.element('ion-spinner').addClass('hide-item');
+					$scope.nomentions = "exist"
+					$scope.mentions = success;
+					// if success get reputationss
+					HungryFactory.getRep(localuserid).success(function(success) {
+						var mentionrepped = document.getElementsByClassName('repbtn');
+						var mentionliked = document.getElementsByClassName('likebtn');
 
-// navigator
-navfunction($http, $scope, HungryFactory);
+						checkRepStatus(mentionrepped, success)
+
+					}).error(function(error) {
+						console.log(error)
+					});
+				}
+			}).error(function(error) {
+				console.log(error)
+			});
 
 	//pull refresh
 		$scope.doRefresh = function() {
@@ -415,23 +449,25 @@ console.log(myLatLng)
 
 $scope.showPhotos = function(){
  var placePhotos = []
- var bucket = new AWS.S3({params: {Bucket: 'myapp'}});
+ var bucket = new AWS.S3({params: {Bucket: 'k'}});
 var params = {
-  Bucket: 'myapp', /* required */
+  Bucket: 'k', /* required */
   Delimiter: '/',
   EncodingType: 'url',
-  Prefix: 'places/' + $stateParams.placeid + '/'
+  Prefix: 'p/' + $stateParams.placeid + '/'
 };
 bucket.listObjects(params, function(err,data){
 	   if (err){
 	   	console.log(err)
 	   } else{
-	   	console.log(data)
+	   	 if (data.Contents.length === 0){
+	   	 	alert("no photos")
+	   	 }
+	   	 else{
      angular.forEach(data.Contents, function(item){
-     	console.log(item)
-     	 if (item.Size != 0){
+        if (item.Size != 0){
      	 	  var p = {
-     	 	  	photo: 'http://s3.amazonaws.com/myapp/' + item.Key
+     	 	  	photo: 'http://s3.amazonaws.com/k/' + item.Key
      	 	  }
      	 	 placePhotos.push(p)
      	 }
@@ -441,6 +477,7 @@ bucket.listObjects(params, function(err,data){
          $scope.photosOfPlace = placePhotos;
 
      }, 100)
+   }
 	   }
 })
 
@@ -540,6 +577,7 @@ function getAspectRatio(width, height) {
 				$scope.mentions = success;
 						HungryFactory.getAllMentions().success(function(success) {
 							console.log(success.length)
+							getFavorites();
 							var mentionLength = success.length;
 							$scope.counts = 100 - mentionLengthUser/mentionLength * 100;
 							addClass(angular.element('.myforks'));
@@ -567,7 +605,6 @@ function getAspectRatio(width, height) {
 												localStorage.setItem("showTab", "forks");
 
 											}
-
 						}).error(function(error) {
 							console.log(error)
 						});
@@ -579,13 +616,14 @@ function getAspectRatio(width, height) {
 			console.log(angular.element('#idHolderUser').attr('data-username'))
 var imageUser = $('#idHolderUser').attr('data-username')
 var imageid = $('#idHolderUser').attr('data-userid')
-new AWS.S3().getObject({Bucket: 'MyApp', Key: imageUser + imageid + 'profile'}).on('success', function(response) {
+
+/*new AWS.S3().getObject({Bucket: 'k', Key: imageUser + imageid + 'profile'}).on('success', function(response) {
   console.log("Key was", response.request.params.Key);
 
-$scope.userImage = 'https://s3.amazonaws.com/' + 'MyApp' + '/' + imageUser + imageid + 'profile' +'?v=2'
+$scope.userImage = 'https://s3.amazonaws.com/' + 'k' + '/' + imageUser + imageid + 'profile' +'?v=2'
 
 
-}).send();			
+}).send();		*/	
 			HungryFactory.getFollowing(localStorage.getItem('user')).success(function(success) {
 				console.log(success)
 
@@ -683,20 +721,41 @@ $scope.userImage = 'https://s3.amazonaws.com/' + 'MyApp' + '/' + imageUser + ima
 		})
 
 	}
+
+//getFavs
+var getFavorites = function(){
+		HungryFactory.getFavorites(localStorage.getItem('userid')).success(function(success){
+			console.log(success)
+			$scope.favoriteslength = success.length;
+			$scope.favorites = success;
+			getLikes();
+		}).error(function(error){
+			console.log(error)
+		});	
+}	
+// get Likes
+var getLikes = function(){
+			HungryFactory.getRep(localStorage.getItem('userid')).success(function(success){
+			for (var i = 0; i < success.length; i++){
+				if (success[i].value === 100){
+					likesArray.push(success[i])
+				}
+			}
+			$scope.likeslength = likesArray.length;
+			$scope.likes = success;
+		}).error(function(error){
+			console.log(error)
+		});
+}
+
+
+
+
 $scope.showFavorites = function($event){
 	localStorage.setItem("showTab", "favorites");
 	var thiselement = angular.element('.myfavs');
 	removeClass(thiselement)
 	addClass(thiselement)
-
-		HungryFactory.getFavorites(localStorage.getItem('userid')).success(function(success){
-			console.log(success)
-			$scope.favoriteslength = success.length;
-			$scope.favorites = success;
-		}).error(function(error){
-			console.log(error)
-		});
-
 	$scope.showfavorites = 'true'
 	$scope.showlikes = 'false'
 	$scope.showmentions = 'false'
@@ -706,22 +765,8 @@ $scope.showLikes = function(){
 	localStorage.setItem("showTab", "likes");
 
 	var thiselement = angular.element('.mylikes');
-	var successArray = [];
 	removeClass(thiselement)
 	addClass(thiselement)
-
-		HungryFactory.getRep(localStorage.getItem('userid')).success(function(success){
-			for (var i = 0; i < success.length; i++){
-				if (success[i].value === 100){
-					successArray.push(success[i])
-				}
-			}
-			$scope.likeslength = successArray.length;
-			$scope.likes = success;
-		}).error(function(error){
-			console.log(error)
-		});
-
 	$scope.showlikes = 'true'
 	$scope.showfavorites = 'false'
 	$scope.showmentions = 'false'
@@ -1115,10 +1160,9 @@ function checkRepStatus(mentionrepped, success){
 function navfunction($http, $scope, HungryFactory) {
 	navigator.geolocation.getCurrentPosition(function(position) {
 
-		var latitude = position.coords.latitude;
-		var longitude = position.coords.longitude;
-		var zipArray = [];
-		var geoArray = [];
+		 latitude = position.coords.latitude;
+		 longitude = position.coords.longitude;
+
 
 		//get geolocation
 		$http({
@@ -1149,42 +1193,20 @@ function navfunction($http, $scope, HungryFactory) {
 
 			}
 
-			var latToUse = success.results[0].geometry.location.lat;
-			var longToUse = success.results[0].geometry.location.lng;
+			 latToUse = success.results[0].geometry.location.lat;
+			 longToUse = success.results[0].geometry.location.lng;
 			//store zip in array
-			var geoObject = {
+			 geoObject = {
 				lat: latToUse,
 				lng: longToUse
 			}
 			geoArray.push(geoObject)	
-			var latPlus = geoArray[0].lat + 10;
-			var latMinus = geoArray[0].lat - 10;
+			 latPlus = geoArray[0].lat + 10;
+			 latMinus = geoArray[0].lat - 10;
 
-			var lngPlus = geoArray[0].lng + 10;
-			var lngMinus = geoArray[0].lng - 10
+			 lngPlus = geoArray[0].lng + 10;
+			 lngMinus = geoArray[0].lng - 10
 
-			HungryFactory.getMentions(latMinus, latPlus, lngMinus, lngPlus).success(function(success) {
-				if (success.length === 0) {
-					$scope.nomentions = "none"
-					angular.element('ion-spinner').addClass('hide-item');
-				} else {
-					angular.element('ion-spinner').addClass('hide-item');
-					$scope.nomentions = "exist"
-					$scope.mentions = success;
-					// if success get reputationss
-					HungryFactory.getRep(localuserid).success(function(success) {
-						var mentionrepped = document.getElementsByClassName('repbtn');
-						var mentionliked = document.getElementsByClassName('likebtn');
-
-						checkRepStatus(mentionrepped, success)
-
-					}).error(function(error) {
-						console.log(error)
-					});
-				}
-			}).error(function(error) {
-				console.log(error)
-			});
 
 
 		})

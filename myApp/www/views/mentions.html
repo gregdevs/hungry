@@ -8,7 +8,7 @@
  
    <ion-list>
     <ion-item item="item" ng-repeat="mention in mentions" class="mentionWrapper item-divider" ng-if="nomentions == 'exist'">
-       <h3 class="mention" ng-bind-html="::mention | getPlace">&nbsp;<span>@</span>{{mention}}</h3>
+       <h3 class="mention" data-placename="{{mention.placeinfo.placename}}" data-placeid="{{mention.placeid}}" place-loc >&nbsp;<span>@</span>{{mention.placeinfo.placename}}</h3>
       <span class="fromtime">&nbsp;{{mention.created_date | fromTime}} ago</span>
        <span class="minititle" ng-bind-html="mention.placemention | getHash">{{mention.placemention | getHash}}&nbsp</span>
 

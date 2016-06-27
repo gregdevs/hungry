@@ -59,19 +59,20 @@
 	<h4>forks&nbsp;&nbsp;<span style="font-weight:400;">{{forklength}}</span></h4>
 	 <ion-list>
 	  <ion-item item="item" ng-repeat="mention in mentions" class="mentionWrapper  item-divider">
-	  	 <h3 class="mention" ng-bind-html="::mention | getPlace">&nbsp;<span>@</span>{{mention | getPlace}}</h3>
+	  	 <h3 data-placename="{{mention.placeinfo.placename}}" data-placeid="{{mention.placeid}}"  place-loc class="mention">@{{mention.placeinfo.placename}}</h3>
 	  	<span class="fromtime">&nbsp;{{mention.created_date | fromTime}} ago</span>
        <span class="minititle" ng-bind-html="mention.placemention | getHash">{{mention.placemention | getHash}}&nbsp</span>
 	  	<div class="userpill"><img ng-src="{{userImage}}"/></div> <span  ng-bind-html="mention.username | getUser" class="byline">{{mention.username | getUser}}</span>
 	  </ion-item>
 	</ion-list>
 </div>
+
 <!-- show Favorite eats-->
 <div ng-if="showfavorites == 'true'">
 	<h4>Favorite eats&nbsp;&nbsp;<span style="font-weight:400;">{{favoriteslength}}</span></h4>
 	 <ion-list>
-	  <ion-item item="item" ng-repeat="favorite in favorites" class="mentionWrapper  item-divider">
-	  	 <h3 class="mention" ng-bind-html="::favorite | getPlace">&nbsp;<span>@</span>{{favorite | getPlace}}</h3>
+	  <ion-item item="item" ng-repeat="favorite in favorites" class="mentionWrapper  item-divider" >
+	  	 <h3 data-placename="{{favorite.placename}}" data-placeid="{{favorite.placeid}}"  place-loc class="mention">@{{favorite.placename}}</h3>
 	  </ion-item>
 	</ion-list>
 </div>
@@ -81,8 +82,8 @@
 	<h4>Likes&nbsp;&nbsp;<span style="font-weight:400;">{{likeslength}}</span></h4>
 
    <ion-list>
-    <ion-item item="item" ng-repeat="mention in likes"  ng-if="mention.value == '100'"class="mentionWrapper item-divider" >
-	  	 <h3 class="mention" ng-bind-html="::mention | getPlace">&nbsp;<span>@</span>{{mention | getPlace}}</h3><span class="fromtime">&nbsp;{{mention.mention.created_date | fromTime}} ago</span>
+    <ion-item item="item" ng-repeat="mention in likes"  ng-if="mention.value == '100'"class="mentionWrapper item-divider">
+	  	 <h3 data-placename="{{mention.mention.placeinfo.placename}}" data-placeid="{{mention.placeid}}"  place-loc class="mention">@{{mention.mention.placeinfo.placename}}</h3><span class="fromtime">&nbsp;{{mention.mention.created_date | fromTime}} ago</span>
 
        <span class="minititle" ng-bind-html="mention.mention.placemention | getHash">{{mention.mention.placemention | getHash}}&nbsp</span>
 

@@ -1,6 +1,6 @@
     AWS.config.update({
-        accessKeyId : 'keyid',
-        secretAccessKey : 'key'
+        accessKeyId : 'key',
+        secretAccessKey : 'access'
     });
     
     AWS.config.region = 'us-east-1';
@@ -217,7 +217,7 @@ hungryApp.filter('isMyprofile', function () {
     var viewFromLocal = localStorage.getItem('view');
     return hash.replace(/\./g,' ').replace(/#(\S*)/g,'<a href="#/tab/' +  viewFromLocal + 'hashtags/$1">#$1</a>');
   }
-}).filter('getPlace', function($stateParams) {
+})/*.filter('getPlace', function($stateParams) {
   return function(place) {
     var locationUrl = window.location.href;
     var parts = locationUrl.split('/');
@@ -262,7 +262,7 @@ hungryApp.filter('isMyprofile', function () {
     }
   }
 
-}).directive('placeDirective', ['$timeout', function($timeout) {
+})*/.directive('placeDirective', ['$timeout', function($timeout) {
   return {
     restrict: 'A',
     link: function($scope, $elm, $attr) {
@@ -412,7 +412,26 @@ hungryApp.filter('isMyprofile', function () {
     }
   }
 
-})
+}).directive('placeLoc', ['$location', function($location){
+  return{
+      restrict: 'A',
+      link: function($scope, elm, attr){
+        elm.on('click', function(){
+         p = attr["placename"];
+        pid = attr["placeid"];  
+        console.log(p + pid)
+      // #/tab/' + viewFromLocal + 'place/' + place.mention.placeinfo.placename + '/' + place.placeid + '"
+      l = localStorage.getItem("view");
+       $scope.$apply(function(){
+        $location.path('/tab/' + l + 'place/' + p + '/' + pid) 
+
+       })
+        })
+
+
+      }
+  }
+}])
 
 
 var timeSince = function(date) {
