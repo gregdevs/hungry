@@ -30,7 +30,7 @@
         <span>{{mentionCount}} forks</span>
         <span style="clear:both;display:block;">{{cityofplace}}</span>
          <!-- <a href="#/tab/userfollowing/{{user.username}}"> <span>Following</span></a>-->
-          <a  href="#/tab/userfollowers/{{user.username}}"><span class="followerspan">{{favoriteCount}} Followers</span></a>
+          <a  href="#/tab/userfollowers/{{user.username}}/"><span class="followerspan">{{favoriteCount}} Followers</span></a>
                       
       </div>
 </div>
@@ -64,8 +64,9 @@
       <span class="fromtime">&nbsp;{{mention.created_date | fromTime}} ago</span>
        <span class="minititle" ng-bind-html="mention.placemention | getHash">{{mention.placemention | getHash}}&nbsp</span>
       <div class="userpill"><img ng-src="{{mention.mentions.userImage}}"/></div>
-        <span ng-if="mention.mentions.username == localUser" class="byline">{{mention.username | getUser}}</span>
-        <span ng-if="mention.mentions.username != localUser" ng-bind-html="mention.username | getUser" class="byline">{{mention.username | getUser}}</span>
+      <a href="#/tab/mentionsuser/{{mention.username}}/{{mention.author}}"> 
+        <span class="byline">{{mention.username}}</span>
+      </a>
 	
     <div class="interactionbox">
       <i class="ion-thumbsup repbtn" like-fork usertolike="{{mention.username}}" data-reputationid="{{reputationid}}" data-mentionid="{{mention.id}}" data-placeid="{{mention.placeid}}"></i>

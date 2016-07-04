@@ -1,6 +1,6 @@
     AWS.config.update({
-        accessKeyId : 'key',
-        secretAccessKey : 'access'
+        accessKeyId : 'ID',
+        secretAccessKey : 'KEY'
     });
     
     AWS.config.region = 'us-east-1';
@@ -80,8 +80,8 @@ var hungryApp = angular.module('hungryApp', ['ionic', 'ngCordova'])
       }
     })
     .state('tabs.searchuser', {
-      url: '/searchuser/:username',
-      cache: true,
+      url: '/searchuser/:username/:userid',
+      cache: false,
       views:{
         'home-tab':{
           templateUrl: 'views/user.html',
@@ -120,8 +120,8 @@ var hungryApp = angular.module('hungryApp', ['ionic', 'ngCordova'])
     }
     }) 
     .state('tabs.mentionsuser', {
-      url: '/mentionsuser/:username',
-      cache: true,
+      url: '/mentionsuser/:username/:userid',
+      cache: false,
       views:{
         'mentions-tab':{
           templateUrl: 'views/user.html',
@@ -150,8 +150,8 @@ var hungryApp = angular.module('hungryApp', ['ionic', 'ngCordova'])
       }
     })         
     .state('tabs.user', {
-      url: '/user/:username',
-      cache: true,
+      url: '/user/:username/:userid',
+      cache: false,
       views:{
         'user-tab':{
           templateUrl: 'views/user.html',
@@ -277,22 +277,7 @@ hungryApp.filter('isMyprofile', function () {
 
   }
 
-}]).filter('getUser', function () {
-  return function (user){
-    var viewFromLocal = localStorage.getItem('view');
-    console.log(user)
-    if (viewFromLocal === "user") {
-      return '<a href="#/tab/user/' + user + '">' + '<span class="byline">'+ user + '</span>' + '</a>';
-
-    } 
-
-
-    else {
-      return '<a href="#/tab/' + viewFromLocal + 'user/' + user + '">' + '<span class="byline">'+ user + '</span>' + '</a>';
-
-    }
-  }
-}).filter('parseThis', function () {
+}]).filter('parseThis', function () {
   return function (item) {
     //console.log(item)
     var array = [];

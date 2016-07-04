@@ -14,10 +14,8 @@
 
       <div class="userpill"><img ng-src="{{mention.mentions.userImage}}"/></div> 
       
-      <a ng-if="mention.mentions.username == localUser" href="#/tab/profile"> 
-        <span class="byline">{{mention.username}}</span>
-      </a>
-      <a ng-if="mention.mentions.username != localUser" href="#/tab/mentionsuser/{{mention.username}}"> 
+
+      <a ng-if="mention.mentions.username != localUser" href="#/tab/mentionsuser/{{mention.username}}/{{mention.author}}"> 
         <span class="byline">{{mention.username}}</span>
       </a>
 

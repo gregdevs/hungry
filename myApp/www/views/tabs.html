@@ -8,7 +8,7 @@
           <ion-nav-view name="mentions-tab" ></ion-nav-view>
         </ion-tab>
 
-        <ion-tab title="MyProfile" icon="ion-person" href="#/tab/user/{{username}}" on-select="main.onTabSelected(this)" ng-controller="usertabCtrl">
+        <ion-tab title="MyProfile" icon="ion-person" href="#/tab/user/{{username}}/{{userid}}" on-select="main.onTabSelected(this)" ng-controller="usertabCtrl" >
           <ion-nav-view name="user-tab"></ion-nav-view>
         </ion-tab> 
 

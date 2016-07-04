@@ -41,6 +41,7 @@ hungryApp.controller('loginCtrl', function($scope, HungryFactory, $location){
 }
 }).controller('homeCtrl', function($stateParams, $scope, $location, $state, $http, HungryFactory){
 	  localStorage.setItem("controller", 'home')
+
 // navigator
 navfunction($http, $scope, HungryFactory);
 
@@ -68,6 +69,10 @@ navfunction($http, $scope, HungryFactory);
 
 }).controller('usertabCtrl', function($scope, $stateParams){
 	$scope.username = localStorage.getItem('user')
+	$scope.userid = localStorage.getItem('userid')
+	$scope.resetUserTab = function(){
+		resetUserProfile();
+	}
 
 }).controller('mentionsCtrl', function($scope, $stateParams, HungryFactory, $http){ 
 	$scope.placeFilteringIgnored = false;
@@ -85,6 +90,7 @@ $scope.togglePlaceFiltering = function() {
 					angular.element('ion-spinner').addClass('hide-item');
 					$scope.nomentions = "exist"
 					$scope.mentions = success;
+					console.log(success)
 					// if success get reputationss
 					HungryFactory.getRep(localuserid).success(function(success) {
 						var mentionrepped = document.getElementsByClassName('repbtn');
@@ -449,12 +455,12 @@ console.log(myLatLng)
 
 $scope.showPhotos = function(){
  var placePhotos = []
- var bucket = new AWS.S3({params: {Bucket: 'k'}});
+ var bucket = new AWS.S3({params: {Bucket: 'myapp'}});
 var params = {
-  Bucket: 'k', /* required */
+  Bucket: 'myapp', /* required */
   Delimiter: '/',
   EncodingType: 'url',
-  Prefix: 'p/' + $stateParams.placeid + '/'
+  Prefix: 'places/' + $stateParams.placeid + '/'
 };
 bucket.listObjects(params, function(err,data){
 	   if (err){
@@ -467,7 +473,7 @@ bucket.listObjects(params, function(err,data){
      angular.forEach(data.Contents, function(item){
         if (item.Size != 0){
      	 	  var p = {
-     	 	  	photo: 'http://s3.amazonaws.com/k/' + item.Key
+     	 	  	photo: 'http://s3.amazonaws.com/myapp/' + item.Key
      	 	  }
      	 	 placePhotos.push(p)
      	 }
@@ -517,20 +523,33 @@ function getAspectRatio(width, height) {
 }
 
 }).controller('userCtrl', function($scope, $stateParams, HungryFactory, $location, $timeout){
-	  localStorage.setItem("controller", 'user')
+	$userId = $stateParams.userid;
+	 localStorage.setItem("controller", 'user')
+	 if (localStorage.getItem("clicked") === $stateParams.username){
+	 	//
+	 }else{
+   localStorage.setItem("clicked", $stateParams.username);
+   localStorage.setItem('showTab', 'forks')
+ }
 	$scope.appTitle = $stateParams.username
 	$scope.showfavorites = 'false'
 	$scope.showmentions = 'true'
 	$scope.showlikes = 'false'
-
-
+  var $uName;
+  var $uLikes;
+  var $uMentions;
+  var $uFavorites;
+//if (localStorage.getItem($stateParams.username + 'object')){
+	//  var $localUser = JSON.parse(localStorage.getItem($stateParams.username + 'object'));
+    //$scope.mentions = $localUser.usermentions;
+//}else{
 
 	//get user based on state url variable
 	HungryFactory.getUsers($stateParams.username).success(function(success) {
 		//console.log(success.results)
 		$scope.users = success;
-		console.log($scope.users[0])
-
+		$uName = $scope.users[0].username;
+     
 
 		// get user reputation
 		HungryFactory.getReputations($stateParams.username).success(function(success) {
@@ -568,13 +587,13 @@ function getAspectRatio(width, height) {
 			}
 
 			//get user activity
-			var thisId = $('#idHolderUser').attr('data-userid');
 
 			HungryFactory.getMentionsByUser($stateParams.username).success(function(success) {
 				//console.log(success)
 				$scope.forklength = success.length;
 				var mentionLengthUser = success.length
 				$scope.mentions = success;
+				$uMentions = $scope.mentions;
 						HungryFactory.getAllMentions().success(function(success) {
 							console.log(success.length)
 							getFavorites();
@@ -582,29 +601,34 @@ function getAspectRatio(width, height) {
 							$scope.counts = 100 - mentionLengthUser/mentionLength * 100;
 							addClass(angular.element('.myforks'));
 
-					
+					   $timeout(function(){
 						// if show favorites, show this view
 											if (localStorage.getItem("showTab") === "favorites") {
-												$timeout(function() {
 													angular.element('.myfavs').triggerHandler('click');
-												}, 0);
+												
 											}
 						// if show forks, show this view
 											else if (localStorage.getItem("showTab") === "forks") {
-												$timeout(function() {
 													angular.element('.myforks').triggerHandler('click');
-												}, 0);
+												
 											}
 						// if show likes, show this view
 											else if (localStorage.getItem("showTab") === "likes") {
-												$timeout(function() {
 													angular.element('.mylikes').triggerHandler('click');
-												}, 0);
+												
 											}
 											else if (!localStorage.getItem("showTab")){
 												localStorage.setItem("showTab", "forks");
 
 											}
+										}, 0)
+var userObject = {
+	   username: $uName,
+	   userlikes: $uLikes,
+	   usermentions: $uMentions,
+	   userfavorites: $uFavorites
+}
+localStorage.setItem($stateParams.username + 'object', JSON.stringify(userObject))											
 						}).error(function(error) {
 							console.log(error)
 						});
@@ -617,14 +641,14 @@ function getAspectRatio(width, height) {
 var imageUser = $('#idHolderUser').attr('data-username')
 var imageid = $('#idHolderUser').attr('data-userid')
 
-/*new AWS.S3().getObject({Bucket: 'k', Key: imageUser + imageid + 'profile'}).on('success', function(response) {
+/*new AWS.S3().getObject({Bucket: 'MyApp', Key: imageUser + imageid + 'profile'}).on('success', function(response) {
   console.log("Key was", response.request.params.Key);
 
-$scope.userImage = 'https://s3.amazonaws.com/' + 'k' + '/' + imageUser + imageid + 'profile' +'?v=2'
+$scope.userImage = 'https://s3.amazonaws.com/' + 'MyApp' + '/' + imageUser + imageid + 'profile' +'?v=2'
 
 
 }).send();		*/	
-			HungryFactory.getFollowing(localStorage.getItem('user')).success(function(success) {
+			HungryFactory.getFollowing(imageUser).success(function(success) {
 				console.log(success)
 
 				$scope.showicon = 'true';
@@ -647,7 +671,7 @@ $scope.userImage = 'https://s3.amazonaws.com/' + 'k' + '/' + imageUser + imageid
 
 				for (var i = 0; i < success.length; i++) {
 					console.log(success[i])
-					if (success[i].friendswith.id === thisId) {
+					if (success[i].friendswith.id === userId) {
 						//var addfriendbucket = document.getElementsByClassName('addfriendbucket')[0]
 						//addfriendbucket.style.backgroundColor = "#0198C9"
 						$scope.showicon = 'false';
@@ -679,7 +703,7 @@ $scope.userImage = 'https://s3.amazonaws.com/' + 'k' + '/' + imageUser + imageid
 
 	$scope.addFriend = function() {
 
-		var thisId = $('#idHolder').attr('data-userid');
+		//var thisId = $('#idHolder').attr('data-userid');
 
 
 		//create friend table
@@ -691,51 +715,26 @@ $scope.userImage = 'https://s3.amazonaws.com/' + 'k' + '/' + imageUser + imageid
 		}
 
 
-		HungryFactory.createFriendTable(createFriendTable).success(function(success) {
-			console.log(success)
-			localStorage.setItem("relationFriends", success.objectId)
-				//$location.path('/home')
-
-			var userId = success.objectId;
-
-			var addrelationship = {
-					"friends": {
-						"__type": "Pointer",
-						"className": "_User",
-						"objectId": thisId
-					},
-					username: localStorage.getItem('user')
-				}
-				//add to friend table
-
-			HungryFactory.addFriend(addrelationship, userId).success(function(success) {
-				console.log(success)
-					//var addfriendbucket = document.getElementsByClassName('addfriendbucket')[0]
-					//addfriendbucket.style.backgroundColor = "#0198C9"
-					//$scope.showicon = 'hide'
-
-			}).error(function(error) {
-				console.log(error)
-			})
-
-		})
 
 	}
 
 //getFavs
 var getFavorites = function(){
-		HungryFactory.getFavorites(localStorage.getItem('userid')).success(function(success){
+
+		HungryFactory.getFavorites($userId).success(function(success){
 			console.log(success)
 			$scope.favoriteslength = success.length;
 			$scope.favorites = success;
+			$uFavorites = $scope.favorites;
 			getLikes();
 		}).error(function(error){
 			console.log(error)
 		});	
 }	
 // get Likes
-var getLikes = function(){
-			HungryFactory.getRep(localStorage.getItem('userid')).success(function(success){
+var getLikes = function(){	
+      likesArray.length = 0;				 
+			HungryFactory.getRep($userId).success(function(success){
 			for (var i = 0; i < success.length; i++){
 				if (success[i].value === 100){
 					likesArray.push(success[i])
@@ -743,13 +742,15 @@ var getLikes = function(){
 			}
 			$scope.likeslength = likesArray.length;
 			$scope.likes = success;
+			$uLikes = $scope.likes;
+			console.log($uLikes)
 		}).error(function(error){
 			console.log(error)
 		});
 }
 
 
-
+//}
 
 $scope.showFavorites = function($event){
 	localStorage.setItem("showTab", "favorites");
@@ -783,8 +784,6 @@ $scope.showMentions = function($event){
 	$scope.showmentions = 'true'
 	$scope.showlikes = 'false'
 }
-
-
 
 
 
@@ -1213,4 +1212,8 @@ function navfunction($http, $scope, HungryFactory) {
 
 
 	});
+}
+
+function resetUserProfile(){
+	localStorage.setItem('showTab', 'forks')
 }

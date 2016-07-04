@@ -413,16 +413,9 @@ transition: all 150ms ease;
 transform: rotate(90deg);
 }
 
-
-
-
-
-
 .staractive{
 font-size:1.4em;
 }
-
-
 
 .activeicon{
     color:#FF8450;
