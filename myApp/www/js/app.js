@@ -1,13 +1,13 @@
     AWS.config.update({
-        accessKeyId : 'ID',
-        secretAccessKey : 'KEY'
+        accessKeyId : 'KEY',
+        secretAccessKey : 'ID'
     });
     
     AWS.config.region = 'us-east-1';
 
 var authorname = localStorage.getItem('user');
 localStorage.setItem('user', 'greg');
-
+localStorage.setItem('userid', '1');
 // Ionic Starter App
 // angular.module is a global place for creating, registering and retrieving Angular modules
 // 'starter' is the name of this angular module example (also set in a <body> attribute in index.html)
@@ -81,7 +81,7 @@ var hungryApp = angular.module('hungryApp', ['ionic', 'ngCordova'])
     })
     .state('tabs.searchuser', {
       url: '/searchuser/:username/:userid',
-      cache: false,
+      cache: true,
       views:{
         'home-tab':{
           templateUrl: 'views/user.html',
@@ -111,7 +111,7 @@ var hungryApp = angular.module('hungryApp', ['ionic', 'ngCordova'])
     }) 
     .state('tabs.mentionsplace', {
       url: "/mentionsplace/:placename/:placeid",
-      cache: true,
+      cache: false,
       views:{
         'mentions-tab':{
       templateUrl: "views/place.html",
@@ -121,7 +121,7 @@ var hungryApp = angular.module('hungryApp', ['ionic', 'ngCordova'])
     }) 
     .state('tabs.mentionsuser', {
       url: '/mentionsuser/:username/:userid',
-      cache: false,
+      cache: true,
       views:{
         'mentions-tab':{
           templateUrl: 'views/user.html',
@@ -151,7 +151,7 @@ var hungryApp = angular.module('hungryApp', ['ionic', 'ngCordova'])
     })         
     .state('tabs.user', {
       url: '/user/:username/:userid',
-      cache: false,
+      cache: true,
       views:{
         'user-tab':{
           templateUrl: 'views/user.html',

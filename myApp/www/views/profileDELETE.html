@@ -1,0 +1,67 @@
+
+
+<ion-view  view-title="<i class='ion-fork'></i><span class='apptitle'>{{appTitle}}</span> <i class='ion-knife'></i>">
+  <ion-content>
+		
+		<div ng-repeat="user in users">
+			
+			<div id="idHolder" class="userpill-large" object-id="{{user.objectId}}"><img ng-src="{{user.userImage}}"/></div>
+			  <h2 class="usernameholder">{{user.username}}</h3>			
+			<div class="userlocation">
+				<span>{{user.city}}, {{user.state}}</span>	
+				<span class="conn">{{reputation}}</span>		  			
+			</div>	
+
+
+			<div class="row engageuser">
+
+			     <div class="col col-25 foodbuckets addfriendbucket" ng-if="showicon == 'true'">
+			     	 <i class="ion-person-add" ng-click="addFriend()"></i>
+			     </div>
+
+			     <div class="col col-25 foodbuckets addfriendbucket" ng-if="showicon == 'false'" style="background:#0198C9;">
+			     	 <span >following</span>
+			     </div>
+
+			     <div class="col col-25 foodbuckets">
+			     	 <i class="ion-flame"></i>
+			     </div>
+			     <div class="col col-25 foodbuckets" ng-click="showFriends()">
+			     	  <a class="ion-ios-people" href="#/tab/following/{{user.username}}"></a>
+			     	  <span class="subtitle">Following</span>
+			     </div>
+			     <div class="col col-25 foodbuckets" ng-click="showFriends()">
+			     	  <a class="ion-ios-people" href="#/tab/followers/{{user.username}}"></a>
+			     	  <span class="subtitle">Followers</span>
+			     </div>			     
+			</div>
+
+
+			<span class="activitysmall">activity</span>
+			<div class="powerbar">
+				<div class="powercover" style="width: {{counts}}%"></div>
+			</div>
+
+
+		</div>
+
+	<h4>forks&nbsp;&nbsp;<span style="font-weight:400;">{{forklength}}</span></h4>
+	 <ion-list>
+	  <ion-item item="item" ng-repeat="mention in mentions" class="mentionWrapper  item-divider">
+	  	 <h3 class="mention">&nbsp;<span>@</span><a href="#/tab/place/{{mention.placename}}/{{mention.lat}}/{{mention.lng}}">{{mention.placename}}</a><span class="fromtime">&nbsp;{{mention.created_date | fromTime}} ago</span></h3>
+	  	
+       <span class="minititle" ng-bind-html="mention.placemention | getHash">{{mention.placemention | getHash}}&nbsp</span>
+
+	  	<div class="userpill"><img ng-src="{{userImage}}"/></div> 
+      <a ng-if="mention.mentions.username == localUser" href="#/tab/profile"> 
+        <span class="byline">{{mention.mentions.username}}</span>
+      </a>
+      <a ng-if="mention.mentions.username != localUser" href="#/tab/user/{{mention.mentions.username}}"> 
+        <span class="byline">{{mention.mentions.username}}</span>
+      </a>
+	  </ion-item>
+	</ion-list>
+
+
+</ion-content>
+</ion-view>

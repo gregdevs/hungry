@@ -63,7 +63,7 @@
 	  	<span class="fromtime">&nbsp;{{mention.created_date | fromTime}} ago</span>
        <span class="minititle" ng-bind-html="mention.placemention | getHash">{{mention.placemention | getHash}}&nbsp</span>
 	  	<div class="userpill"><img ng-src="{{userImage}}"/></div> 
-      <a href="#/tab/mentionsuser/{{mention.username}}/{{mention.author}}"> 
+      <a href="#/tab/{{userview}}/{{mention.username}}/{{mention.author}}"> 
         <span class="byline">{{mention.username}}</span>
       </a>
 	  </ion-item>
@@ -91,7 +91,7 @@
        <span class="minititle" ng-bind-html="mention.mention.placemention | getHash">{{mention.mention.placemention | getHash}}&nbsp</span>
 
       <div class="userpill"><img ng-src="{{mention.mentions.userImage}}"/></div>      
-      <a href="#/tab/mentionsuser/{{mention.mention.username}}/{{mention.mention.author}}"> 
+      <a href="#/tab/{{userview}}/{{mention.mention.username}}/{{mention.mention.author}}"> 
         <span class="byline">{{mention.mention.username}}</span>
       </a>
 

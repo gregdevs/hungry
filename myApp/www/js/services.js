@@ -2,6 +2,7 @@ hungryApp.factory('HungryFactory', function($rootScope, $http){
   var HungryFactory = {};
   var urlBase =  'http://127.0.0.1:8000/';
 
+
 //login
         
 HungryFactory.getItems = function(searchthis, latLocation, longLocation) {
@@ -11,16 +12,16 @@ HungryFactory.getItems = function(searchthis, latLocation, longLocation) {
 	var params = {
 		callback: 'JSON_CALLBACK',
 		ll: latLocation + ',' + longLocation, 
-		oauth_consumer_key: 'key', //Consumer Key
-		oauth_token: 'token', //Token
+		oauth_consumer_key: 'XaMXvnBYzAgJ_DIVlYWkUg', //Consumer Key
+		oauth_token: 'X8WUIn-_K1uGIJuLYA5JHpzBLVhEWlc3', //Token
 		oauth_signature_method: "HMAC-SHA1",
 		oauth_timestamp: new Date().getTime(),
 		oauth_nonce: randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'),
 		term: searchthis,
 		category_filter: 'restaurants'
 	};
-	var consumerSecret = 'scret'; //Consumer Secret
-	var tokenSecret = 'bsecret'; //Token Secret
+	var consumerSecret = 'rUtcaYKAEGQZVH7XqvKW8WBUJ7I'; //Consumer Secret
+	var tokenSecret = 'bPLsTjyRQQeAGOSj1NoRqEVLk-o'; //Token Secret
 	var signature = oauthSignature.generate(method, url, params, consumerSecret, tokenSecret, {
 		encodeSignature: false
 	});

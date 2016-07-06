@@ -14,7 +14,7 @@ var likesArray = [];
 		var longitude ;
 		var zipArray = [];
 		var geoArray = [];			
-hungryApp.controller('loginCtrl', function($scope, HungryFactory, $location){
+MYAPP.controller('loginCtrl', function($scope, HungryFactory, $location){
 	$scope.login = function() {
 		var username = document.getElementById('username').value;
 		var password = document.getElementById('password').value;
@@ -30,6 +30,7 @@ hungryApp.controller('loginCtrl', function($scope, HungryFactory, $location){
 			localStorage.setItem("sessionToken", success.sessionToken);
 			localStorage.setItem("user", success.username);
 			localStorage.setItem("objectId", success.objectId);
+			localStorage.setItem("userid", success.id);
 			var getParams = {
 				where: {
 					username: localStorage.getItem("user")
@@ -455,9 +456,9 @@ console.log(myLatLng)
 
 $scope.showPhotos = function(){
  var placePhotos = []
- var bucket = new AWS.S3({params: {Bucket: 'myapp'}});
+ var bucket = new AWS.S3({params: {Bucket: 'MYAPP'}});
 var params = {
-  Bucket: 'myapp', /* required */
+  Bucket: 'MYAPP', /* required */
   Delimiter: '/',
   EncodingType: 'url',
   Prefix: 'places/' + $stateParams.placeid + '/'
@@ -473,7 +474,7 @@ bucket.listObjects(params, function(err,data){
      angular.forEach(data.Contents, function(item){
         if (item.Size != 0){
      	 	  var p = {
-     	 	  	photo: 'http://s3.amazonaws.com/myapp/' + item.Key
+     	 	  	photo: 'http://s3.amazonaws.com/MYAPP/' + item.Key
      	 	  }
      	 	 placePhotos.push(p)
      	 }
@@ -523,7 +524,7 @@ function getAspectRatio(width, height) {
 }
 
 }).controller('userCtrl', function($scope, $stateParams, HungryFactory, $location, $timeout){
-	$userId = $stateParams.userid;
+	 $userId = $stateParams.userid;
 	 localStorage.setItem("controller", 'user')
 	 if (localStorage.getItem("clicked") === $stateParams.username){
 	 	//
@@ -531,10 +532,16 @@ function getAspectRatio(width, height) {
    localStorage.setItem("clicked", $stateParams.username);
    localStorage.setItem('showTab', 'forks')
  }
+  userview = localStorage.getItem('view');
+  if (userview === 'user'){
+  	$scope.userview = 'user'
+  }else{
+  	$scope.userview = userview + 'user'
+  }
 	$scope.appTitle = $stateParams.username
-	$scope.showfavorites = 'false'
-	$scope.showmentions = 'true'
-	$scope.showlikes = 'false'
+//	$scope.showfavorites = 'false'
+//	$scope.showmentions = 'false'
+//	$scope.showlikes = 'false'
   var $uName;
   var $uLikes;
   var $uMentions;
@@ -604,17 +611,17 @@ function getAspectRatio(width, height) {
 					   $timeout(function(){
 						// if show favorites, show this view
 											if (localStorage.getItem("showTab") === "favorites") {
-													angular.element('.myfavs').triggerHandler('click');
+													angular.element('.myfavs').trigger('click');
 												
 											}
 						// if show forks, show this view
 											else if (localStorage.getItem("showTab") === "forks") {
-													angular.element('.myforks').triggerHandler('click');
+													angular.element('.myforks').trigger('click');
 												
 											}
 						// if show likes, show this view
 											else if (localStorage.getItem("showTab") === "likes") {
-													angular.element('.mylikes').triggerHandler('click');
+													angular.element('.mylikes').trigger('click');
 												
 											}
 											else if (!localStorage.getItem("showTab")){
