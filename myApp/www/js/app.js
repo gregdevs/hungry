@@ -1,6 +1,6 @@
     AWS.config.update({
-        accessKeyId : 'KEY',
-        secretAccessKey : 'ID'
+        accessKeyId : 'KEYID',
+        secretAccessKey : 'KEY'
     });
     
     AWS.config.region = 'us-east-1';
@@ -61,7 +61,7 @@ var hungryApp = angular.module('hungryApp', ['ionic', 'ngCordova'])
     })
     .state('tabs.searchplace', {
       url: "/searchplace/:placename/:placeid/:placeLat/:placeLng",
-      cache: true,
+      cache: false,
       views:{
         'home-tab':{
       templateUrl: "views/place.html",
@@ -161,7 +161,7 @@ var hungryApp = angular.module('hungryApp', ['ionic', 'ngCordova'])
     })   
     .state('tabs.userplace', {
       url: "/userplace/:placename/:placeid",
-      cache: true,
+      cache: false,
       views:{
         'user-tab':{
       templateUrl: "views/place.html",

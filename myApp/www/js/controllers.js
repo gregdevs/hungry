@@ -1,20 +1,19 @@
 var localuserid = localStorage.getItem('userid')
 var localusername = localStorage.getItem('user')
+var userview = null;
 var likesArray = [];
-			var latToUse;
-			var longToUse;
-			//store zip in array
-			var geoObject;	
-			var latPlus;
-			var latMinus;
-
-			var lngPlus;
-			var lngMinus;
-		var latitude ;
-		var longitude ;
-		var zipArray = [];
-		var geoArray = [];			
-MYAPP.controller('loginCtrl', function($scope, HungryFactory, $location){
+var latToUse;
+var longToUse;
+var geoObject;	
+var latPlus;
+var latMinus;
+var lngPlus;
+var lngMinus;
+var latitude ;
+var longitude ;
+var zipArray = [];
+var geoArray = [];			
+hungryApp.controller('loginCtrl', function($scope, HungryFactory, $location){
 	$scope.login = function() {
 		var username = document.getElementById('username').value;
 		var password = document.getElementById('password').value;
@@ -26,7 +25,6 @@ MYAPP.controller('loginCtrl', function($scope, HungryFactory, $location){
 
 		HungryFactory.loginUser(loginDetails).success(function(success) {
 			//console.log(success)
-
 			localStorage.setItem("sessionToken", success.sessionToken);
 			localStorage.setItem("user", success.username);
 			localStorage.setItem("objectId", success.objectId);
@@ -42,10 +40,8 @@ MYAPP.controller('loginCtrl', function($scope, HungryFactory, $location){
 }
 }).controller('homeCtrl', function($stateParams, $scope, $location, $state, $http, HungryFactory){
 	  localStorage.setItem("controller", 'home')
-
 // navigator
 navfunction($http, $scope, HungryFactory);
-
 	$scope.appTitle = "What Are You Feeling?"
 	$scope.foodtypes = ['italian', 'chinese', 'mexican', 'japanese', 'thai', 'burgers', 'pizza', 'vegan', 'turkish'];
 	$scope.findFood = function($event){
@@ -76,12 +72,12 @@ navfunction($http, $scope, HungryFactory);
 	}
 
 }).controller('mentionsCtrl', function($scope, $stateParams, HungryFactory, $http){ 
-	$scope.placeFilteringIgnored = false;
-
+$scope.placeFilteringIgnored = false;
+getUserView($scope);    
 $scope.togglePlaceFiltering = function() {
     $scope.placeFilteringIgnored = !$scope.placeFilteringIgnored;
 }
-	  localStorage.setItem("controller", 'mentions')
+localStorage.setItem("controller", 'mentions')
 	$scope.localUser = localStorage.getItem('user');
 			HungryFactory.getMentions(latMinus, latPlus, lngMinus, lngPlus).success(function(success) {
 				if (success.length === 0) {
@@ -132,7 +128,8 @@ $scope.togglePlaceFiltering = function() {
 
 }).controller('hashCtrl', function($scope, HungryFactory, $stateParams){ 
 	  localStorage.setItem("controller", 'hash')
-            $scope.appTitle = '#' + $stateParams.hashName;
+    $scope.appTitle = '#' + $stateParams.hashName;
+    getUserView($scope);    
 		//alert($stateParams.hashName)
 			$scope.localUser = localStorage.getItem('user');
 			
@@ -161,11 +158,13 @@ $scope.togglePlaceFiltering = function() {
 
 
 }).controller('placeCtrl', function($scope, $stateParams, HungryFactory, $ionicModal, $timeout, $cordovaGeolocation){
-	    localStorage.setItem("controller", 'place')
+     getUserView($scope); 
+	   localStorage.setItem("controller", 'place')
 		$scope.localUser = localStorage.getItem('user');
 		$scope.appTitle = $stateParams.placename;
 		$scope.addedsuccess = "false";
         console.log($scope.appTitle)
+       
 		//var placeName = $stateParams.placeName;
 		//var placeLat = $stateParams.latOfPlace;
 		//var placeLng = $stateParams.lngOfPlace;				
@@ -456,9 +455,9 @@ console.log(myLatLng)
 
 $scope.showPhotos = function(){
  var placePhotos = []
- var bucket = new AWS.S3({params: {Bucket: 'MYAPP'}});
+ var bucket = new AWS.S3({params: {Bucket: 'myapp'}});
 var params = {
-  Bucket: 'MYAPP', /* required */
+  Bucket: 'myapp', /* required */
   Delimiter: '/',
   EncodingType: 'url',
   Prefix: 'places/' + $stateParams.placeid + '/'
@@ -471,10 +470,11 @@ bucket.listObjects(params, function(err,data){
 	   	 	alert("no photos")
 	   	 }
 	   	 else{
+    $('.photos-wrapper').addClass('cardSlideIn');	   	 	
      angular.forEach(data.Contents, function(item){
         if (item.Size != 0){
      	 	  var p = {
-     	 	  	photo: 'http://s3.amazonaws.com/MYAPP/' + item.Key
+     	 	  	photo: 'http://s3.amazonaws.com/myapp/' + item.Key
      	 	  }
      	 	 placePhotos.push(p)
      	 }
@@ -488,9 +488,7 @@ bucket.listObjects(params, function(err,data){
 	   }
 })
 
-    $('.photos-wrapper').addClass('cardSlideIn');
-    
- 
+   
 	
 	angular.forEach($scope.photosOfPlace, function(photo, i){
 	var img = new Image();
@@ -525,6 +523,8 @@ function getAspectRatio(width, height) {
 
 }).controller('userCtrl', function($scope, $stateParams, HungryFactory, $location, $timeout){
 	 $userId = $stateParams.userid;
+    getUserView($scope);
+
 	 localStorage.setItem("controller", 'user')
 	 if (localStorage.getItem("clicked") === $stateParams.username){
 	 	//
@@ -532,16 +532,9 @@ function getAspectRatio(width, height) {
    localStorage.setItem("clicked", $stateParams.username);
    localStorage.setItem('showTab', 'forks')
  }
-  userview = localStorage.getItem('view');
-  if (userview === 'user'){
-  	$scope.userview = 'user'
-  }else{
-  	$scope.userview = userview + 'user'
-  }
+
 	$scope.appTitle = $stateParams.username
-//	$scope.showfavorites = 'false'
-//	$scope.showmentions = 'false'
-//	$scope.showlikes = 'false'
+
   var $uName;
   var $uLikes;
   var $uMentions;
@@ -1078,7 +1071,14 @@ $location.path('/tab/searchplace/' + placename + '/' + placeid+ '/' + placeLat +
 
 
 
-
+function getUserView($scope){
+	userview = localStorage.getItem('view');
+  if (userview === 'user'){
+  	 $scope.userview = 'user';
+  }else{
+  	 $scope.userview = userview + 'user';
+  }	
+}
 
 
 
@@ -1164,12 +1164,10 @@ function checkRepStatus(mentionrepped, success){
 }
 
 function navfunction($http, $scope, HungryFactory) {
-	navigator.geolocation.getCurrentPosition(function(position) {
 
+	navigator.geolocation.getCurrentPosition(function(position) {
 		 latitude = position.coords.latitude;
 		 longitude = position.coords.longitude;
-
-
 		//get geolocation
 		$http({
 			method: 'GET',
@@ -1219,6 +1217,13 @@ function navfunction($http, $scope, HungryFactory) {
 
 
 	});
+	navigator.geolocation.watchPosition(function(position) {
+  console.log("i'm tracking you!");
+},
+function (error) { 
+  if (error.code == error.PERMISSION_DENIED)
+      console.log("you denied me :-(");
+});
 }
 
 function resetUserProfile(){

@@ -64,7 +64,7 @@
       <span class="fromtime">&nbsp;{{mention.created_date | fromTime}} ago</span>
        <span class="minititle" ng-bind-html="mention.placemention | getHash">{{mention.placemention | getHash}}&nbsp</span>
       <div class="userpill"><img ng-src="{{mention.mentions.userImage}}"/></div>
-      <a href="#/tab/searchuser/{{mention.username}}/{{mention.author}}"> 
+      <a href="#/tab/{{userview}}/{{mention.username}}/{{mention.author}}"> 
         <span class="byline">{{mention.username}}</span>
       </a>
 	

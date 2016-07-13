@@ -15,15 +15,13 @@
       <div class="userpill"><img ng-src="{{mention.mentions.userImage}}"/></div> 
       
 
-      <a ng-if="mention.mentions.username != localUser" href="#/tab/mentionsuser/{{mention.username}}/{{mention.author}}"> 
+      <a ng-if="mention.mentions.username != localUser" href="#/tab/{{userview}}/{{mention.username}}/{{mention.author}}"> 
         <span class="byline">{{mention.username}}</span>
       </a>
 
     <div class="interactionbox">
       <i class="ion-thumbsup repbtn" like-fork usertolike="{{mention.username}}" data-placeid="{{mention.placeid}}" data-reputationid="{{reputationid}}" data-mentionid="{{mention.id}}"></i>
       <i class="ion-thumbsdown repbtn" unlike-fork usertounlike="{{mention.username}}" data-placeid="{{mention.placeid}}" data-reputationid="{{reputationid}}"  data-mentionid="{{mention.id}}"></i>
-     <!-- <i class="ion-thumbsup likebtn" favorite-this data-mentionid="{{mention.id}}"></i>-->
-
     </div>
 
     </ion-item>
